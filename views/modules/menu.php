@@ -5,35 +5,35 @@
 		<ul class="sidebar-menu">
 
 			<li class="active">
-				<a href="#">
+				<a href="main">
 					<i class="fa fa-home"></i>
 						<span>Inicio</span>
 				</a>
 			</li>
 
 			<li>
-				<a href="#">
+				<a href="users">
 					<i class="fa fa-user"></i>
 						<span>Usuarios</span>
 				</a>
 			</li>
 
 			<li>
-				<a href="#">
+				<a href="categories">
 					<i class="fa fa-th"></i>
 						<span>Categorias</span>
 				</a>
 			</li>
 
 			<li>
-				<a href="#">
+				<a href="products">
 					<i class="fa fa-product-hunt"></i>
 						<span>Productos</span>
 				</a>
 			</li>
 
-			<li class="treeview">
-				<a href="#">
+			<li>
+				<a href="clients">
 					<i class="fa fa-users"></i>
 						<span>Clientes</span>
 				</a>
@@ -50,7 +50,7 @@
 
 				<ul class="treeview-menu">
 					<li>
-						<a href="#">	
+						<a href="sells">	
 							<i class="fa fa-circle-o">
 								<span>Administrar Ventas</span>
 							</i>
@@ -58,7 +58,7 @@
 					</li>
 
 					<li>
-						<a href="#">	
+						<a href="create-sell">	
 							<i class="fa fa-circle-o">
 								<span>Crear Ventas</span>
 							</i>
@@ -66,7 +66,7 @@
 					</li>
 
 					<li>
-						<a href="#">	
+						<a href="reports">	
 							<i class="fa fa-circle-o">
 								<span>Reporte de Ventas</span>
 							</i>

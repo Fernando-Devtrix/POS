@@ -9,6 +9,9 @@
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
 
+  <!-- Change icon -->
+  <link rel="icon" href="views/img/template/icono-negro.png">
+
   <!-- Bootstrap 3.3.7 -->
   <link rel="stylesheet" href="views/bower_components/bootstrap/dist/css/bootstrap.min.css">
 
@@ -70,10 +73,33 @@
     include "modules/menu.php";
 
       /*============================
-    =            Container        =
+    =        Starting Page       =
     ============================*/
 
-    include "modules/container.php";
+    if (isset($_GET["route"])) {
+      
+      if ($_GET["route"] == "main" ||
+          $_GET["route"] == "users" ||
+          $_GET["route"] == "categories" ||
+          $_GET["route"] == "products" ||
+          $_GET["route"] == "clients" ||
+          $_GET["route"] == "sells" ||
+          $_GET["route"] == "create-sell" ||
+          $_GET["route"] == "reports") {
+      
+        include "modules/".$_GET["route"].".php";
+        
+      }else{
+
+        include "modules/404.php";
+
+      }
+    }else{
+
+        include "modules/main.php";
+
+    }
+
 
     /*============================
     =            Footer         =
