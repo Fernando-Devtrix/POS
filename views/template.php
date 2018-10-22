@@ -22,7 +22,7 @@
   <link rel="stylesheet" href="views/bower_components/Ionicons/css/ionicons.min.css">
 
   <!-- Theme style -->
-  <link rel="stylesheet" href="views/dist/css/AdminLTE.min.css">
+  <link rel="stylesheet" href="views/dist/css/AdminLTE.css">
 
   <!-- AdminLTE Skins -->
   <link rel="stylesheet" href="views/dist/css/skins/_all-skins.min.css">
@@ -53,12 +53,15 @@
  
 </head>
 
-<body class="hold-transition skin-blue sidebar-collapse sidebar-mini">
-<!-- Site wrapper -->
-<div class="wrapper">
+<body class="hold-transition skin-blue sidebar-collapse sidebar-mini login-page">
+
 
   <?php
 
+  if (isset($_SESSION['isLogIn']) && $_SESSION["isLogIn"] == "ok") {
+  
+
+    echo '<div class="wrapper">';
 
     /*============================
     =            Menu            =
@@ -106,6 +109,15 @@
     ============================*/
 
     include "modules/footer.php";
+
+    echo '</div>';
+
+   }else{
+
+    include "modules/login.php";
+
+   }
+
   ?>
   
 </div>
