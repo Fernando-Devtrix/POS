@@ -54,7 +54,7 @@
 						
 						<li class="user-body">
 							<div class="pull-right">
-								<a href="#" class="btn btn-default btn-flat">Exit</a>
+								<a href="exit" class="btn btn-default btn-flat">Exit</a>
 							</div>
 						</li>
 

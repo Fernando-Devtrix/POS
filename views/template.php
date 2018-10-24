@@ -1,3 +1,9 @@
+<?php 
+
+  session_start();
+
+ ?>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -88,7 +94,8 @@
           $_GET["route"] == "clients" ||
           $_GET["route"] == "sells" ||
           $_GET["route"] == "create-sell" ||
-          $_GET["route"] == "reports") {
+          $_GET["route"] == "reports" ||
+          $_GET["route"] == "exit") {
       
         include "modules/".$_GET["route"].".php";
         

@@ -40,6 +40,13 @@
         
       </div>
 
+      <?php
+
+        $login = new UserController();
+        $login -> ctrlUserLogin();
+
+      ?>
+
     </form>
     
   </div>
