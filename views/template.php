@@ -67,12 +67,15 @@
   <script src="views/bower_components/datatables.net-bs/js/dataTables.responsive.min.js"></script>
   <script src="views/bower_components/datatables.net-bs/js/responsive.boostrap.min.js"></script>
 
+  <!-- SweetAlert 2-->
+  <script src="views/plugins/sweetalert2/sweetalert2.all.min.js"></script>
+
+</head>
+
   <!--=====================================
   =                  Body                 =
   ======================================-->  
  
-</head>
-
 <body class="hold-transition skin-blue sidebar-collapse sidebar-mini login-page">
 
 
@@ -144,5 +147,6 @@
 </div>
 <!-- ./wrapper -->
 <script src="views/js/template.js"></script>
+<script src="views/js/users.js"></script>
 </body>
 </html>

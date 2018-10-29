@@ -13,7 +13,7 @@ require_once "models/products.model.php";
 require_once "models/sells.model.php";
 require_once "models/users.model.php";
 
-$plantilla = new TemplateController();
-$plantilla -> ctrlTemplate();
+$template = new TemplateController();
+$template -> ctrlTemplate();
 
 ?>

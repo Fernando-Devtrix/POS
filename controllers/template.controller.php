@@ -2,7 +2,7 @@
 
 class TemplateController {
 
-	public function ctrlTemplate(){
+	static public function ctrlTemplate(){
 		
 		include "views/template.php";
 

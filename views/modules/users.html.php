@@ -204,11 +204,11 @@
                 
                 <div class="panel">SUBIR FOTO</div>
 
-                <input type="file" class="newPhoto" name="newPhoto">
+                <input type="file" id="newPhoto" name="newPhoto">
 
-                <p class="help-block">Peso máximo de la foto: 2 MB</p>
+                <p class="help-block">Peso máximo de la foto: 200 MB</p>
 
-                <img src="views/img/users/default/anonymous.png" alt="Photo" class="img-thumbnail previous" width="100px">
+                <img src="views/img/users/default/anonymous.png" alt="Photo" class="img-thumbnail" width="100px">
 
               </div>
 
@@ -226,13 +226,6 @@
             <button type="submit" class="btn btn-primary">Guardar usuario</button>
 
           </div>
-
-          <?php 
-
-            $createUsers = new UserController();
-            $createUsers -> ctrlCreateUser();
-
-          ?>
 
         </form>
 
