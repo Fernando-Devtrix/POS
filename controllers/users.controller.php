@@ -195,7 +195,200 @@ class UserController {
 
 		}
 
+	}
+
+	/*========================
+	=      Show User        =
+	========================*/
+
+	static public function ctrlShowUser($item, $value) {
+
+	$table = "usuarios";	
+	$answer = UserModel::MdlShowUsers($table, $item, $value);
+
+	return $answer;
 
 	}
-		
+
+	/*========================
+	=      Edit User        =
+	========================*/
+
+	static public function ctrlEditUser() {
+
+		if (isset($_POST["editUser"])) {
+
+			if(preg_match('/^[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ ]+$/', $_POST["editName"])) {
+			 	
+		 		/*========================
+				=    Immage Validation   =
+				========================*/
+
+				$route = $_POST["currentPhoto"];
+
+				if (isset($_FILES["editPhoto"]["tmp_name"]) && !empty($_FILES["editPhoto"]["tmp_name"])) {
+
+					list($width, $heigth) = getimagesize($_FILES["editPhoto"]["tmp_name"]);
+
+					$newWidth = 500;
+					$newHeigth= 500;
+
+					$directory = "views/img/users/".$_POST["editUser"];
+
+					/*======================================
+					=    Ask if there exit and img in Db   =
+					=======================================*/
+
+					if (!empty($_POST["currentPhoto"])) {
+						
+						unlink($_POST["currentPhoto"]);
+
+					}else{
+
+						mkdir($directory,  0755);
+						
+					}
+
+
+					/*=======================================================
+					=    According to the image php functions are applied   =
+					========================================================*/
+
+					if ($_FILES["editPhoto"]["type"] == "image/jpeg") {
+						/*================================
+						=    Save image into directory   =
+						================================*/
+						$random = mt_rand(100, 999);
+
+						$route = "views/img/users/".$_POST["editUser"]."/".$random.".jpg";
+
+						$origin = imagecreatefromjpeg($_FILES["editPhoto"]["tmp_name"]);
+
+						$destiny = imagecreatetruecolor($newWidth, $newHeigth);
+
+						imagecopyresized($destiny, $origin, 0, 0, 0, 0, $newWidth, $newHeigth, $width, $heigth);
+
+						imagejpeg($destiny, $route);
+
+					}
+
+					if ($_FILES["editPhoto"]["type"] == "image/png") {
+						/*================================
+						=    Save image into directory   =
+						================================*/
+						$random = mt_rand(100, 999);
+
+						$route = "views/img/users/".$_POST["editUser"]."/".$random.".png";
+
+						$origin = imagecreatefrompng($_FILES["editPhoto"]["tmp_name"]);
+
+						$destiny = imagecreatetruecolor($newWidth, $newHeigth);
+
+						imagecopyresized($destiny, $origin, 0, 0, 0, 0, $newWidth, $newHeigth, $width, $heigth);
+
+						imagepng($destiny, $route);
+
+					}
+
+				}
+
+				$table = "usuarios";
+
+				if ($_POST["editPassword"] != "") {
+
+					if (preg_match('/^[a-zA-Z0-9]+$/', $_POST["editPassword"])) {
+						
+						$encript = crypt($_POST["editPassword"], '$2a$07$asxx54ahjppf45sd87a5a4dDDGsystemdev$');
+					
+					}else{
+
+						echo'<script>
+
+								swal({
+									  type: "error",
+									  title: "¡La contraseña no puede ir vacía o llevar caracteres especiales!",
+									  showConfirmButton: true,
+									  confirmButtonText: "Cerrar"
+									  }).then(function(result){
+										if (result.value) {
+
+										window.location = "usuarios";
+
+										}
+									})
+
+						  	</script>';
+					}
+
+				}else{
+
+					$encript = $_POST["currentPassword"];
+
+				}
+
+				$data = array("nombre" => $_POST["editName"],
+						   	  "usuario" => $_POST["editUser"],
+						   	  "password" => $encript,
+						   	  "perfil" => $_POST["editProfile"],
+						      "foto" => $route);
+
+				$answer = UserModel::mdlEditUser($table, $data);
+
+				if($answer == "ok"){
+
+					echo '<script>
+
+					swal({
+
+						type: "success",
+						title: "¡El usuario ha sido editado correctamente!",
+						showConfirmButton: true,
+						confirmButtonText: "Cerrar"
+						}).then(function(result){
+
+								if(result.value){
+								
+									window.location = "users";
+
+								}
+
+							});
+						
+
+					</script>';
+
+
+				}	
+
+
+			}else{
+
+				echo '<script>
+
+							swal({
+
+								type: "error",
+								title: "El nombre no puede ir vacío o llevar caracteres especiales!",
+								showConfirmButton: true,
+								confirmButtonText: "Cerrar",
+								closeOnConfirm: false
+								}).then(function(result){
+
+									if(result.value){
+									
+										window.location = "users";
+
+									}
+
+								});
+						
+
+							</script>';
+
+			}
+			
+		}
+
+	}
+
 }

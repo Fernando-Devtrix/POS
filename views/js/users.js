@@ -54,3 +54,48 @@ $(".newPhoto").change(function() {
 	}
 
 });
+
+/*=============================================
+=               User Edit                     =
+=============================================*/
+
+$(".btnUserEdit").click(function() {
+
+	var userID = $(this).attr("userID");
+
+	var data = new FormData();
+	data.append("userID", userID)
+
+	$.ajax({
+
+		url:"ajax/users.ajax.php",
+		method: "POST",
+		data: data,
+		cache: false,
+		contentType: false,
+		processData: false,
+		dataType: "json",
+		success: function(answer) {
+
+			$("#editName").val(answer["nombre"]);
+			$("#editUser").val(answer["usuario"]);
+			$("#editProfile").html(answer["perfil"]);
+			$("#editProfile").val(answer["perfil"]);
+			$("#currentPhoto").val(answer["foto"]);
+
+			$("#currentPassword").val(answer["password"]);
+
+			if(answer["foto"] != "") {
+
+				$(".previous").attr("src", answer["foto"]);
+
+			}
+
+		}
+
+	});
+
+});
+
+
+
