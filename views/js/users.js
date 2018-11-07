@@ -97,5 +97,85 @@ $(".btnUserEdit").click(function() {
 
 });
 
+/*=============================================
+=                Edit User Status             =
+=============================================*/
+
+$(".btnActivate").click(function(){
+
+	var userId = $(this).attr("userId");
+	var userStatus = $(this).attr("userStatus");
+
+	var data = new FormData;
+	data.append("activateId", userId);
+	data.append("activateUser", userStatus);
+
+	$.ajax({
+
+		url:"ajax/users.ajax.php",
+		method: "POST",
+		data: data,
+		cache: false,
+		contentType: false,
+		processData: false,
+		success: function(answer){
+
+
+		}
+
+	});
+
+	if (userStatus == 0) { 
+
+		$(this).removeClass('btn-success');
+		$(this).addClass('btn-danger');
+		$(this).html('Desactivado');
+		$(this).attr('userStatus', 1);
+
+	}else{
+
+		$(this).addClass('btn-success');
+		$(this).removeClass('btn-danger');
+		$(this).html('Activado');
+		$(this).attr('userStatus', 0);
+
+	}
+
+});
+
+/*=============================================
+=       Check if user already exits           =
+=============================================*/
+
+$("#newUser").change(function(){
+
+	$(".alert").remove();
+
+	var user = $(this).val();
+
+	var data = new FormData();
+	data.append("validateUser", user);
+
+	 $.ajax({
+	    url:"ajax/users.ajax.php",
+	    method:"POST",
+	    data: data,
+	    cache: false,
+	    contentType: false,
+	    processData: false,
+	    dataType: "json",
+	    success:function(answer){
+
+			if(answer){
+
+	    		$("#newUser").parent().after('<div class="alert alert-warning">Este usuario ya existe en la base de datos</div>');
+
+	    		$("#newUser").val("");
+
+	    	}
+	    }
+	});
+});
+
 
 

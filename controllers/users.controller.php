@@ -23,22 +23,52 @@ class UserController {
 
 			    $answer = UserModel::MdlShowUsers($table, $item, $value);
 
-			    if($answer['usuario'] ==  $_POST["enterUser"] && $answer['password'] == $encript) {
+			    if($answer["usuario"] ==  $_POST["enterUser"] && $answer['password'] == $encript) {
 
-			    	$_SESSION['isLogIn'] = "ok";
-			    	$_SESSION["id"] = $answer["id"];
-					$_SESSION["nombre"] = $answer["nombre"];
-					$_SESSION["usuario"] = $answer["usuario"];
-					$_SESSION["foto"] = $answer["foto"];
-					$_SESSION["perfil"] = $answer["perfil"];
+			    	if ($answer["estado"] == 1) {
+			    		
+				    	$_SESSION["isLogIn"] = "ok";
+				    	$_SESSION["id"] = $answer["id"];
+						$_SESSION["nombre"] = $answer["nombre"];
+						$_SESSION["usuario"] = $answer["usuario"];
+						$_SESSION["foto"] = $answer["foto"];
+						$_SESSION["perfil"] = $answer["perfil"];
+
+						/*==========================
+						=      Register last login =
+						===========================*/
+
+						date_default_timezone_set('America/Mexico_City');
+
+						$date = date('Y-m-d');
+						$hour = date('H:i:s');
+
+						$currentDate = $date.' '.$hour;
+
+						$item1 = "ultimo_login";
+						$value1 = $currentDate;
+
+						$item2 = "id";
+						$value2 = $answer["id"];
+
+						$lastLogin = UserModel::mdlUpdateUser($table, $item1, $value1, $item2, $value2);
+
+						if ($lastLogin == "ok") {
+							
+					    	echo '<script>
+
+								window.location = "main";
+
+					    	</script>';
+
+						}
 
 
-			    	echo '<script>
+			    	}else{
 
-						window.location = "main";
-
-			    	</script>';
-
+			    		echo '<br>
+					    	<div class="alert alert-danger">El usuario no está activado</div>';
+			    	}
 
 			    }else{
 
