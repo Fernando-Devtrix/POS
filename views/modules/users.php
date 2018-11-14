@@ -35,7 +35,7 @@
 
         <div class="box-body">
 
-         <table class="table table-bordered table-striped dt-responsive tables">
+         <table class="table table-bordered table-striped dt-responsive tables" width="100%">
            
            <thead>
              
@@ -66,7 +66,7 @@
               foreach ($users as $key => $value) {
 
                 echo '<tr>
-                        <td>1</td>
+                        <td>'.($key+1).'</td>
                         <td>'.$value["nombre"].'</td>
                         <td>'.$value["usuario"].'</td>';
 
@@ -99,7 +99,7 @@
                             
                             <button class="btn btn-warning btnUserEdit" userID="'.$value["id"].'" data-toggle="modal" data-target="#modalUserEdit"><i class="fa fa-pencil"></i></button>
                             
-                            <button class="btn btn-danger"><i class="fa fa-times"></i></button>
+                            <button class="btn btn-danger btnDeleteUser" userID="'.$value["id"].'" userPhoto="'.$value["foto"].'" user="'.$value["usuario"].'"><i class="fa fa-times"></i></button>
 
                           </div>
 
@@ -429,6 +429,13 @@
     </div>
 
   </div>
+
+  <?php 
+
+  $deleteUser = new UserController();
+  $deleteUser -> ctrlDeleteUser();
+
+  ?>
 
 
 

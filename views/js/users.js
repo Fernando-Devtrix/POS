@@ -59,7 +59,7 @@ $(".newPhoto").change(function() {
 =               User Edit                     =
 =============================================*/
 
-$(".btnUserEdit").click(function() {
+$(document).on("click", ".btnUserEdit", function() {
 
 	var userID = $(this).attr("userID");
 
@@ -101,7 +101,7 @@ $(".btnUserEdit").click(function() {
 =                Edit User Status             =
 =============================================*/
 
-$(".btnActivate").click(function(){
+$(document).on("click",".btnActivate", function(){
 
 	var userId = $(this).attr("userId");
 	var userStatus = $(this).attr("userStatus");
@@ -120,6 +120,23 @@ $(".btnActivate").click(function(){
 		processData: false,
 		success: function(answer){
 
+			if(window.matchMedia("(max-width:767px)").matches){
+		
+	      		 swal({
+			      	title: "El usuario ha sido actualizado",
+			      	type: "success",
+			      	confirmButtonText: "¡Cerrar!"
+			    	}).then(function(result) {
+			        
+			        	if (result.value) {
+
+			        	window.location = "users";
+
+		       		}
+
+			    });
+
+	 		}
 
 		}
 
@@ -177,5 +194,35 @@ $("#newUser").change(function(){
 	});
 });
 
+/*=============================================
+=       Check if user already exits           =
+=============================================*/
+
+$(document).on("click",  ".btnDeleteUser", function() {
+
+	var userID = $(this).attr("userID");
+	var userPhoto = $(this).attr("userPhoto");
+	var user = $(this).attr("user");
+
+	 swal({
+	    title: '¿Está seguro de borrar el usuario?',
+	    text: "¡Si no lo está puede cancelar la accíón!",
+	    type: 'warning',
+	    showCancelButton: true,
+	    confirmButtonColor: '#3085d6',
+	    cancelButtonColor: '#d33',
+	    cancelButtonText: 'Cancelar',
+	    confirmButtonText: 'Si, borrar usuario!'
+  }).then(function(result) {
+
+  		if (result.value) {
+
+     		 window.location = "index.php?route=users&userID="+userID+"&user="+user+"&userPhoto="+userPhoto;
+
+  		}
+
+  });
+
+});
 
 

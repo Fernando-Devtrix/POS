@@ -50,39 +50,46 @@
            </thead>
 
            <tbody>
-          
-          <?php
+             
+            <tr>
 
-            $item = null;
-            $value = null;
+              <td>1</td>
 
-            $categories = CategoriesController::ctrlShowCategories($item, $value);
+              <td>EQUIPOS ELECTROMECÁNICOS</td>
 
-            foreach ($categories as $key => $value) {
+              <td>
+                
+                <div class="btn-group">
+                  
+                  <button class="btn btn-warning"><i class="fa fa-pencil"></i></button>
+                  
+                  <button class="btn btn-danger"><i class="fa fa-times"></i></button>
+
+                </div>
+
+              </td>
+
+            </tr>
+
+             <tr>
+
+              <td>1</td>
+
+              <td>EQUIPOS ELECTROMECÁNICOS</td>
               
-                           
-               echo '<tr>
+              <td>
+                
+                <div class="btn-group">
+                  
+                  <button class="btn btn-warning"><i class="fa fa-pencil"></i></button>
+                  
+                  <button class="btn btn-danger"><i class="fa fa-times"></i></button>
 
-                        <td>'.($key+1).'</td>
+                </div>
 
-                        <td>'.$value["categoria"].'</td>
+              </td>
 
-                        <td>
-                          
-                          <div class="btn-group">
-                            
-                            <button class="btn btn-warning"><i class="fa fa-pencil"></i></button>
-                            
-                            <button class="btn btn-danger"><i class="fa fa-times"></i></button>
-
-                          </div>
-
-                        </td>
-
-                     </tr>';
-            }
-
-           ?>
+            </tr>
 
            </tbody>
 
@@ -158,14 +165,6 @@
             <button type="submit" class="btn btn-primary">Guardar categoría</button>
 
           </div>
-
-          <?php 
-
-            $createCategory = new CategoriesController();
-            $createCategory -> ctrlCreateCategory();
-
-
-           ?>
 
         </form>
 

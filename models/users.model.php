@@ -98,7 +98,7 @@ class UserModel {
 
 	/*========================
 	=    Update Users Status =
-	========================*/
+	========================*/	
 
 	static public function mdlUpdateUser($table, $item1, $value1, $item2, $value2){
 
@@ -120,6 +120,33 @@ class UserModel {
 			$stmt -> close();
 
 			$stmt = null;
+
+	}
+	
+	/*========================
+	=    Update Users Status =
+	========================*/
+
+	static public function mdlDeleteUser($table, $data) {
+
+			$stmt = Conection::conect()->prepare("DELETE FROM $table WHERE id = :id");
+
+			$stmt -> bindParam(":id", $data, PDO::PARAM_STR);
+
+			if($stmt -> execute()){
+
+				return "ok";
+			
+			}else{
+
+				return "error";	
+
+			}
+
+			$stmt -> close();
+
+			$stmt = null;
+
 
 	}
 
