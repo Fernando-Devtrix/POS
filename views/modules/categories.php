@@ -71,9 +71,9 @@
                           
                           <div class="btn-group">
                             
-                            <button class="btn btn-warning"><i class="fa fa-pencil"></i></button>
+                            <button class="btn btn-warning btnEditCategory" idCategory="'.$value["id"].'" data-toggle="modal" data-target="#modalEditCategory"><i class="fa fa-pencil"></i></button>
                             
-                            <button class="btn btn-danger"><i class="fa fa-times"></i></button>
+                            <button class="btn btn-danger btnDeleteCategory" idCategory="'.$value["id"].'"><i class="fa fa-times"></i></button>
 
                           </div>
 
@@ -96,9 +96,9 @@
 
   </div>
 
-      <!--===========================
-      =     Modal: Add User        =
-      ============================-->
+  <!--===========================
+  =     Modal: Add Category     =
+  ============================-->
 
 
   <div id="modalAddCategory" class="modal fade" role="dialog">
@@ -164,6 +164,85 @@
             $createCategory = new CategoriesController();
             $createCategory -> ctrlCreateCategory();
 
+           ?>
+
+        </form>
+
+      </div>
+
+    </div>
+
+  </div>
+
+   <!--===========================
+   =     Modal: Edit Category    =
+   ============================-->
+
+
+  <div id="modalEditCategory" class="modal fade" role="dialog">
+
+    <div class="modal-dialog">
+
+      <div class="modal-content">
+
+        <form role="form" method="post">
+          
+          <!--===========================
+          =     Modal's head            =
+          ============================-->
+
+          <div class="modal-header" style="background:#3c8dbc; color:white;">
+
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+
+            <h4 class="modal-title">Editar categoría</h4>
+
+          </div>
+         <!--===========================
+          =     Modal's body           =
+          ============================-->
+
+          <div class="modal-body">
+
+            <div class="box-body">
+
+              <!--======================
+              =    Name Input          =
+              =======================-->          
+              
+              <div class="form-group">
+                
+                <div class="input-group">
+                  
+                  <span class="input-group-addon"><i class="fa fa-th"></i></span>
+
+                  <input type="text" class="form-control input-lg" name="editCategory" id="editCategory" required>
+
+                  <input type="hidden" name="idCategory" id="idCategory" required>
+
+                </div>
+
+              </div>
+
+            </div>
+
+          </div>
+
+          <!--===========================
+          =     Modal's footer          =
+          ============================-->
+          <div class="modal-footer">
+
+            <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Salir</button>
+
+            <button type="submit" class="btn btn-primary">Guardar cambios</button>
+
+          </div>
+
+          <?php 
+
+            $editCategory = new CategoriesController();
+            $editCategory -> ctrlEditCategory();
 
            ?>
 
@@ -175,6 +254,13 @@
 
   </div>
 
+<?php 
 
+  $deleteCategory = new CategoriesController();
+  $deleteCategory -> ctrlDeleteCategory();
+
+ ?>
+
+  
 
 
