@@ -18,8 +18,8 @@
   <!-- Change icon -->
   <link rel="icon" href="views/img/template/icono-negro.png">
 
-   <!--=====================================
-  =            Plugins CSS            =
+  <!--=====================================
+  =            Plugins CSS                =
   ======================================-->
 
   <!-- Bootstrap 3.3.7 -->
@@ -43,6 +43,9 @@
     <!-- DataTables -->
   <link rel="stylesheet" href="views/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css">
   <link rel="stylesheet" href="views/bower_components/datatables.net-bs/css/responsive.bootstrap.min.css">
+
+  <!-- iCheck for checkboxes and radio inputs -->
+  <link rel="stylesheet" href="views/plugins/iCheck/all.css">
 
 
   <!--=====================================
@@ -72,6 +75,9 @@
 
   <!-- By default SweetAlert2 doesn't support IE. To enable IE 11 support, include Promise polyfill:-->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/core-js/2.4.1/core.js"></script>
+
+  <!-- iCheck 1.0.1 -->
+  <script src="views/plugins/iCheck/icheck.min.js"></script>
 
 </head>
 
@@ -152,5 +158,6 @@
 <script src="views/js/template.js"></script>
 <script src="views/js/users.js"></script>
 <script src="views/js/categories.js"></script>
+<script src="views/js/products.js"></script>
 </body>
 </html>

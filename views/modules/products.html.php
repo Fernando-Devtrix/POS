@@ -35,10 +35,10 @@
 
         <div class="box-body">
 
-         <table class="table table-bordered table-striped dt-responsive productsTable">
+         <table class="table table-bordered table-striped dt-responsive tables">
            
            <thead>
-
+             
             <tr>
               
               <th style="width:10px">#</th>
@@ -48,13 +48,66 @@
               <th>Categoría</th>
               <th>Stock</th>
               <th>Precio de compra</th>
-              <th>Precio de venta</th>
+              <th>Precio de compra</th>
               <th>Agregado</th>
               <th>Acciones</th>
 
             </tr>
 
            </thead>
+
+           <tbody>
+              
+            <tr>
+              <td>1</td>
+              <td><img src="views/img/products/default/anonymous.png" class="img-thumbnail" width="40px" alt="Profile Image"></td>
+              <td>0001</td>
+              <td>Lorem ipsum dolor sit amet</td>
+              <td>Lorem ipsum dolor </td>
+              <td>20</td>
+              <td>$ 5.00</td>
+              <td>$ 1.00</td>
+              <td>2018-11-11 12:05:32</td>
+              <td>
+                
+                <div class="btn-group">
+                  
+                  <button class="btn btn-warning"><i class="fa fa-pencil"></i></button>
+                  
+                  <button class="btn btn-danger"><i class="fa fa-times"></i></button>
+
+                </div>
+
+              </td>
+
+            </tr>
+
+                <tr>
+                <td>2</td>
+                <td><img src="views/img/products/default/anonymous.png" class="img-thumbnail" width="40px" alt="Profile Image"></td>
+                <td>0001</td>
+                <td>Lorem ipsum dolor sit amet</td>
+                <td>Lorem ipsum dolor </td>
+                <td>20</td>
+                <td>$ 5.00</td>
+                <td>$ 1.00</td>
+                <td>2018-11-11 12:05:32</td>
+                <td>
+                  
+                  <div class="btn-group">
+                    
+                    <button class="btn btn-warning"><i class="fa fa-pencil"></i></button>
+                    
+                    <button class="btn btn-danger"><i class="fa fa-times"></i></button>
+
+                  </div>
+
+                </td>
+
+            </tr>
+
+
+           </tbody>
 
          </table>
 
@@ -98,40 +151,6 @@
 
             <div class="box-body">
 
-              <!--=================================
-              =      Input to select category     =
-              ===================================--> 
-
-              <div class="form-group">
-                
-                <div class="input-group">
-                  
-                  <span class="input-group-addon"><i class="fa fa-th"></i></span>
-
-                  <select name="newCategory" id="newCategory" class="form-control input-lg" required>
-                    
-                    <option value="">Selecciona categoría</option>
-
-                    <?php 
-
-                      $item = null;
-                      $value = null;
-                      
-                      $categories =  CategoriesController::ctrlShowCategories($item, $value);
-
-                      foreach ($categories as $key => $value) {
-                     
-                          echo '<option value="'.$value["id"].'">'.$value["categoria"].'</option>';
-
-                      }
-
-                    ?>
-                    
-                  </select>
-
-                </div>
-
-              </div>
 
               <!--======================
               =    Code Input          =
@@ -143,7 +162,7 @@
                   
                   <span class="input-group-addon"><i class="fa fa-code"></i></span>
 
-                  <input type="text" class="form-control input-lg" name="newCode" id="newCode" placeholder="Ingresar código" readonly required>
+                  <input type="text" class="form-control input-lg" name="newCode" placeholder="Ingresar código" required>
 
                 </div>
 
@@ -165,6 +184,32 @@
 
               </div>
                
+              <!--=================================
+              =      Input to select category     =
+              ===================================--> 
+
+              <div class="form-group">
+                
+                <div class="input-group">
+                  
+                  <span class="input-group-addon"><i class="fa fa-th"></i></span>
+
+                  <select name="newCategory" class="form-control input-lg">
+                    
+                    <option value="">Selecciona categoría</option>
+                    
+                    <option value="Taladros">Taladros</option>
+
+                    <option value="Andamios">Andamios</option>
+
+                    <option value="Equipos para construcción">Equipos para construcción</option>
+
+                  </select>
+
+                </div>
+
+              </div>
+
               <!--======================
               =    Stock  Input        =
               =======================--> 
