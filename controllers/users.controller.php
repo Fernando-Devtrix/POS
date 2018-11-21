@@ -94,7 +94,7 @@ class UserController {
 			   preg_match('/^[a-zA-Z0-9]+$/', $_POST["newPassword"])) {
 
 			    /*========================
-				=    Immage Validation   =
+				=    Image Validation   =
 				========================*/
 
 				$route = "";
@@ -106,9 +106,9 @@ class UserController {
 					$newWidth = 500;
 					$newHeigth= 500;
 			 	
-			 		/*========================
-					=    Immage Validation   =
-					========================*/
+			 		/*===========================
+					=    Create new directory   =
+					===========================*/
 
 					$directory = "views/img/users/".$_POST["newUser"];
 

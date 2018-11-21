@@ -36,4 +36,37 @@ class ModelProducts {
 	
 	}
 
+	# =============================================
+	# =              ADD PRODUCTS                =
+	# =============================================
+
+	static function mdlAddProduct($table, $data) {
+
+		$stmt = Conection::conect()->prepare("INSERT INTO $table(id_categoria, codigo, descripcion, stock, precio_compra, precio_venta, imagen) VALUES (:id_categoria, :codigo, :descripcion, :stock, :precio_compra, :precio_venta, :imagen)");
+		
+		$stmt->bindParam(":id_categoria", $data["id_categoria"], PDO::PARAM_STR); 
+		$stmt->bindParam(":codigo", $data["codigo"], PDO::PARAM_STR); 
+		$stmt->bindParam(":descripcion", $data["descripcion"], PDO::PARAM_STR); 
+		$stmt->bindParam(":stock", $data["stock"], PDO::PARAM_STR); 
+		$stmt->bindParam(":precio_compra", $data["precio_compra"], PDO::PARAM_STR); 
+		$stmt->bindParam(":precio_venta", $data["precio_venta"], PDO::PARAM_STR); 
+		$stmt->bindParam(":imagen", $data["imagen"], PDO::PARAM_STR); 
+
+
+		if ($stmt->execute()) {
+			
+			return "ok";
+
+		}else {
+
+			return "error";
+
+		}
+
+		$stmt->close();		
+
+		$stmt = null; 
+
+	}
+
  }

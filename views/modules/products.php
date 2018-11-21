@@ -187,13 +187,13 @@
 
                <div class="form-group row">
 
-                <div class="col-xs-6">
+                <div class="col-xs-12 col-sm-6">
                 
                   <div class="input-group">
                     
                     <span class="input-group-addon"><i class="fa fa-arrow-up"></i></span>
 
-                    <input type="number" class="form-control input-lg" name="newPricePurchase" min="0" placeholder="Precio de compra" required>
+                    <input type="number" class="form-control input-lg" id="newPricePurchase" name="newPricePurchase" min="0" step="any" placeholder="Precio de compra" required>
 
                   </div>
 
@@ -203,13 +203,13 @@
                 = Price - Sell  Input     =
                 =========================--> 
 
-                <div class="col-xs-6">  
+                <div class="col-xs-12 col-sm-6">  
                 
                   <div class="input-group">
                     
                     <span class="input-group-addon"><i class="fa fa-arrow-down"></i></span>
 
-                    <input type="number" class="form-control input-lg" name="newPriceSell" min="0" placeholder="Precio de venta" required>
+                    <input type="number" class="form-control input-lg" id="newPriceSell" name="newPriceSell" min="0" step="any" placeholder="Precio de venta" required>
 
                   </div>
 
@@ -260,11 +260,11 @@
                 
                   <div class="panel">SUBIR IMAGEN</div>
 
-                  <input type="file" id="newImagen" name="newImagen">
+                  <input type="file" class="newImage" name="newImage">
 
                   <p class="help-block">Peso máximo de la imagen: 2MB</p>
 
-                  <img src="views/img/products/default/anonymous.png" alt="Photo" class="img-thumbnail" width="100px">
+                  <img src="views/img/products/default/anonymous.png" alt="Photo" class="img-thumbnail preview" width="100px">
 
               </div>
 
@@ -284,6 +284,13 @@
           </div>
 
         </form>
+
+        <?php 
+
+          $createProduct = new ProductsController();
+          $createProduct -> ctrlCreateProduct();
+
+        ?>
 
       </div>
 
