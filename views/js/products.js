@@ -195,6 +195,18 @@ $(".newImage").change(function() {
 
 });
 
+/*=============================================
+=                Edit Product                 =
+=============================================*/
+
+$(".productsTable").on("click", "button.btnEditProduct", function() {
+
+	var idProduct = $(this).attr("idProduct");
+	console.log("idProduct", idProduct);
+
+});
+
+
 	
 
 

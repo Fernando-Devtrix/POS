@@ -298,6 +298,219 @@
 
   </div>
 
+  <!--===========================
+  =     Modal: Edit Product     =
+  ============================-->
+
+  <div id="modalEditProduct" class="modal fade" role="dialog">
+
+    <div class="modal-dialog">
+
+      <div class="modal-content">
+
+        <form role="form" method="post" enctype="multipart/form-data">
+          
+          <!--===========================
+          =     Modal's head            =
+          ============================-->
+
+          <div class="modal-header" style="background:#3c8dbc; color:white;">
+
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+
+            <h4 class="modal-title">Editar producto</h4>
+
+          </div>
+         <!--===========================
+          =     Modal's body           =
+          ============================-->
+
+          <div class="modal-body">
+
+            <div class="box-body">
+
+              <!--=================================
+              =      Input to select category     =
+              ===================================--> 
+
+              <div class="form-group">
+                
+                <div class="input-group">
+                  
+                  <span class="input-group-addon"><i class="fa fa-th"></i></span>
+
+                  <select name="editCategory" class="form-control input-lg" readonly required>
+                    
+                    <option id="editCategory">Selecciona categoría</option>
+                    
+                  </select>
+
+                </div>
+
+              </div>
+
+              <!--======================
+              =    Code Input          =
+              =======================-->          
+              
+              <div class="form-group">
+                
+                <div class="input-group">
+                  
+                  <span class="input-group-addon"><i class="fa fa-code"></i></span>
+
+                  <input type="text" class="form-control input-lg" name="editCode" id="editCode" readonly required>
+
+                </div>
+
+              </div>
+
+              <!--======================
+              =    Description Input   =
+              =======================--> 
+
+              <div class="form-group">
+                
+                <div class="input-group">
+                  
+                  <span class="input-group-addon"><i class="fa fa-product-hunt"></i></span>
+
+                  <input type="text" class="form-control input-lg" name="editDescription" id="editDescription" required>
+
+                </div>
+
+              </div>
+               
+              <!--======================
+              =    Stock  Input        =
+              =======================--> 
+
+              <div class="form-group">
+                
+                <div class="input-group">
+                  
+                  <span class="input-group-addon"><i class="fa fa-check"></i></span>
+
+                  <input type="number" class="form-control input-lg" name="editStock" id="editStock" min="0" required>
+
+                </div>
+
+              </div>
+        
+              <!--=======================
+              = Price - Purchase  Input =
+              =========================--> 
+
+               <div class="form-group row">
+
+                <div class="col-xs-12 col-sm-6">
+                
+                  <div class="input-group">
+                    
+                    <span class="input-group-addon"><i class="fa fa-arrow-up"></i></span>
+
+                    <input type="number" class="form-control input-lg" id="editPricePurchase" name="editPricePurchase" min="0" step="any" required>
+
+                  </div>
+
+                </div>
+
+                <!--=======================
+                = Price - Sell  Input     =
+                =========================--> 
+
+                <div class="col-xs-12 col-sm-6">  
+                
+                  <div class="input-group">
+                    
+                    <span class="input-group-addon"><i class="fa fa-arrow-down"></i></span>
+
+                    <input type="number" class="form-control input-lg" id="editPriceSell" name="editPriceSell" min="0" step="any" required>
+
+                  </div>
+
+                  <br>
+
+                  <!--=============================
+                  =     Checkbox for percentage   =
+                  ===============================-->
+                
+                  <div class="col-xs-6">
+                    
+                    <div class="form-group">
+                      
+                      <label>
+                        
+                        <input type="checkbox" class="minimal percentage" checked>
+                        Utilizar porcentaje
+                      </label>
+
+                    </div>
+
+                  </div>
+
+                  <!--===========================
+                  =    Percentage input         =
+                  ============================-->
+                
+                  <div class="col-xs-6" style="padding: 0">
+                    
+                    <div class="input-group">
+                      
+                      <input type="number" class="form-control input-lg newPercentage" min="0" value="40" required>
+
+                      <span class="input-group-addon"><i class="fa fa-percent"></i></span>
+
+                    </div>
+
+                  </div>
+
+                </div>
+
+               </div>
+
+              <!--======================
+              =    Photo Input         =
+              =======================-->
+              <div class="form-group">
+                
+                  <div class="panel">SUBIR IMAGEN</div>
+
+                  <input type="file" class="newImage" name="editImage">
+
+                  <p class="help-block">Peso máximo de la imagen: 2MB</p>
+
+                  <img src="views/img/products/default/anonymous.png" alt="Photo" class="img-thumbnail preview" width="100px">
+
+                  <input type="hidden" name="currentImage" id="currentImage"></input>
+
+              </div>
+
+            </div>
+
+          </div>
+
+          <!--===========================
+          =     Modal's footer          =
+          ============================-->
+          <div class="modal-footer">
+
+            <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Salir</button>
+
+            <button type="submit" class="btn btn-primary">Guardar cambios</button>
+
+          </div>
+
+        </form>
+
+
+      </div>
+
+    </div>
+
+  </div>
+
+
 
 
 

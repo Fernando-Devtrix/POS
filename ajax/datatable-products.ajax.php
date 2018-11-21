@@ -61,8 +61,8 @@ class ProductsTable {
 					=                 GET ACTIONS                 =
 					=============================================*/
 
-				     $buttons = "<div class='btn-group'><button class='btn btn-warning btnEditProduct' idProduct='".$products[$i]["id"]."' data-toggle='modal' data-target=#modalEditProduct''><i class='fa fa-pencil'></i></button><button class='btn btn-danger btnDeleteProduct' idProduct='".$products[$i]["id"]."' code='".$products[$i]["codigo"]."' image='".$products[$i]["imagen"]."'><i class='fa fa-times'></i></button></div>";
-
+				     $buttons = "<div class='btn-group'><button class='btn btn-warning btnEditProduct' idProduct='".$products[$i]["id"]."' data-toggle='modal' data-target='#modalEditProduct'><i class='fa fa-pencil'></i></button><button class='btn btn-danger btnDeleteProduct' idProduct='".$products[$i]["id"]."' code='".$products[$i]["codigo"]."' image='".$products[$i]["imagen"]."'><i class='fa fa-times'></i></button></div>";
+				     
 				  	 $jsonData .='[
 				      "'.($i+1).'",
 				      "'.$image.'",
