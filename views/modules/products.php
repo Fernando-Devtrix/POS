@@ -516,6 +516,13 @@
 
   </div>
 
+<?php 
+
+$deleteProduct = new ProductsController();
+$deleteProduct -> ctrlDeleteProduct();
+
+?>
+
 
 
 

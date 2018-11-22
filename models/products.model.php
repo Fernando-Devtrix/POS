@@ -102,5 +102,29 @@ class ModelProducts {
 
 	}
 
+	# =============================================
+	# =              DELETE PRODUCTS              =
+	# =============================================
+		
+	static public function mdlDeleteProduct($table, $data) {
+			
+		$stmt = Conection::conect()->prepare("DELETE FROM $table WHERE id = :id");
+			
+		$stmt -> bindParam(":id", $data, PDO::PARAM_STR);
+
+		if ($stmt->execute()) {
+			
+			return "ok";
+
+		}else {
+
+			return "error";
+
+		}
+
+		$stmt->close();		
+
+		$stmt = null; 
+	}
 
  }

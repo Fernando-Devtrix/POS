@@ -166,7 +166,7 @@ class ProductsController {
 
 				$route = $_POST["currentImage"];
 
-				if (isset($_FILES["editImage"]["tmp_name"])) {
+				if (isset($_FILES["editImage"]["tmp_name"]) && !empty($_FILES["editImage"]["tmp_name"])) {
 
 					list($width, $heigth) = getimagesize($_FILES["editImage"]["tmp_name"]);
 
@@ -289,6 +289,50 @@ class ProductsController {
 			  	</script>';
 
 			}
+
+		}
+
+	}
+
+	/*===========================
+	=    Delete  Product        =
+	===========================*/
+
+	public static function ctrlDeleteProduct() {
+
+		if (isset($_GET["idProduct"])) {
+			
+			$table = "productos";
+			$data = $_GET["idProduct"];
+
+			if ($_GET["image"] != "" && $_GET["image"] !="views/img/products/default/anonymous.png") {
+				
+				unlink($_GET["image"]);
+				rmdir('views/img/products/'.$_GET["code"]);
+			}
+
+			$answer = ModelProducts::mdlDeleteProduct($table, $data);
+
+			if($answer == "ok"){
+
+				echo'<script>
+
+				swal({
+					  type: "success",
+					  title: "El producto ha sido borrado correctamente",
+					  showConfirmButton: true,
+					  confirmButtonText: "Cerrar"
+					  }).then(function(result){
+								if (result.value) {
+
+								window.location = "products";
+
+								}
+							})
+
+				</script>';
+
+			}		
 
 		}
 
