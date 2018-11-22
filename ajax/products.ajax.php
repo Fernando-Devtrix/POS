@@ -21,6 +21,19 @@ class AjaxProducts{
 
   }
 
+  public $idProduct;
+
+  public function ajaxEditProduct() {
+
+    $item = "id";
+    $value = $this->idProduct;
+
+    $answer = ProductsController::ctrlShowProducts($item, $value);
+
+    echo json_encode($answer);
+
+  }
+
 }
 
 
@@ -33,6 +46,14 @@ if(isset($_POST["categoryID"])){
   $productCode = new AjaxProducts();
   $productCode -> categoryID = $_POST["categoryID"];
   $productCode -> ajaxCreateProductCode();
+
+}
+
+if(isset($_POST["idProduct"])){
+
+  $editProduct = new AjaxProducts();
+  $editProduct -> idProduct = $_POST["idProduct"];
+  $editProduct -> ajaxEditProduct();
 
 }
 

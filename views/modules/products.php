@@ -425,7 +425,7 @@
                     
                     <span class="input-group-addon"><i class="fa fa-arrow-down"></i></span>
 
-                    <input type="number" class="form-control input-lg" id="editPriceSell" name="editPriceSell" min="0" step="any" required>
+                    <input type="number" class="form-control input-lg" id="editPriceSell" name="editPriceSell" min="0" step="any" readonly required>
 
                   </div>
 
@@ -503,6 +503,12 @@
 
         </form>
 
+        <?php 
+
+          $editProduct = new ProductsController();
+          $editProduct -> ctrlEditProduct();
+
+        ?>
 
       </div>
 

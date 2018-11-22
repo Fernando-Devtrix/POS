@@ -69,4 +69,38 @@ class ModelProducts {
 
 	}
 
+	# =============================================
+	# =              ADD PRODUCTS                =
+	# =============================================
+
+	static function mdlEditProduct($table, $data) {
+
+		$stmt = Conection::conect()->prepare("UPDATE $table SET id_categoria = :id_categoria, descripcion = :descripcion, stock = :stock, precio_compra = :precio_compra, precio_venta = :precio_venta, imagen = :imagen WHERE codigo = :codigo");
+		
+		$stmt->bindParam(":id_categoria", $data["id_categoria"], PDO::PARAM_STR); 
+		$stmt->bindParam(":codigo", $data["codigo"], PDO::PARAM_STR); 
+		$stmt->bindParam(":descripcion", $data["descripcion"], PDO::PARAM_STR); 
+		$stmt->bindParam(":stock", $data["stock"], PDO::PARAM_STR); 
+		$stmt->bindParam(":precio_compra", $data["precio_compra"], PDO::PARAM_STR); 
+		$stmt->bindParam(":precio_venta", $data["precio_venta"], PDO::PARAM_STR); 
+		$stmt->bindParam(":imagen", $data["imagen"], PDO::PARAM_STR); 
+
+
+		if ($stmt->execute()) {
+			
+			return "ok";
+
+		}else {
+
+			return "error";
+
+		}
+
+		$stmt->close();		
+
+		$stmt = null; 
+
+	}
+
+
  }

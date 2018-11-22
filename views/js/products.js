@@ -1,4 +1,4 @@
-/*=============================================
+ /*=============================================
 =        LOAD PRODUCTS DINAMIC TABLE          =
 =============================================*/
 
@@ -92,16 +92,21 @@ $("#newCategory").change(function() {
 =               ADD SELL PRICE                =
 =============================================*/
 
-$("#newPricePurchase").change(function() {
+$("#newPricePurchase, #editPricePurchase").change(function() {
 
 	if ($(".percentage").prop("checked")) {
 
 		var valuePercentage = $(".newPercentage").val();
 
 		var percentage = Number($("#newPricePurchase").val() * valuePercentage / 100) + Number($("#newPricePurchase").val()); 
+		
+		var editPercentage = Number($("#editPricePurchase").val() * valuePercentage / 100) + Number($("#editPricePurchase").val()); 
 
 		$("#newPriceSell").val(percentage);
 		$("#newPriceSell").prop("readonly", true);
+
+		$("#editPriceSell").val(editPercentage);
+		$("#editPriceSell").prop("readonly", true);
 		
 	}
 
@@ -115,28 +120,35 @@ $(".newPercentage").change(function() {
 
 	if ($(".percentage").prop("checked")) {
 
-		var valuePercentage = $(".newPercentage").val();
+		var valuePercentage = $(this).val();
 
-		var percentage = Number($("#newPricePurchase").val() * valuePercentage / 100) + Number($("#newPricePurchase").val()); 
+		var percentage = Number(($("#newPricePurchase").val() * valuePercentage / 100)) + Number($("#newPricePurchase").val()); 
+
+		var editPercentage = Number($("#editPricePurchase").val() * valuePercentage / 100) + Number($("#editPricePurchase").val()); 
 
 		$("#newPriceSell").val(percentage);
 		$("#newPriceSell").prop("readonly", true);
+
+		$("#editPriceSell").val(editPercentage);
+		$("#editPriceSell").prop("readonly", true)
 		
 	}
 
 });
 
-$(".percentage").on("ifUnchecked", function() {
+$(".percentage").on("ifUnchecked",function(){
 
-	$("#newPriceSell").prop("readonly", false);
+	$("#newPriceSell").prop("readonly",false);
+	$("#editPriceSell").prop("readonly",false);
 
-}); 
-	
-$(".percentage").on("checked", function() {
+});
 
-	$("#newPriceSell").prop("readonly", true);
+$(".percentage").on("ifChecked",function(){
 
-}); 
+	$("#newPriceSell").prop("readonly",true);
+	$("#editPriceSell").prop("readonly",true);
+
+});
 
 /*=============================================
 =            Upload Product photo             =
@@ -202,9 +214,63 @@ $(".newImage").change(function() {
 $(".productsTable").on("click", "button.btnEditProduct", function() {
 
 	var idProduct = $(this).attr("idProduct");
-	console.log("idProduct", idProduct);
+
+	var data = new FormData();
+	data.append("idProduct", idProduct);
+
+	$.ajax({
+
+		url:"ajax/products.ajax.php",
+		method: "POST",
+		data: data,
+		cache: false,
+		contentType: false,
+		processData: false,
+		dataType: "json",
+		success:function(answer) {
+
+			var categoryData = new FormData();
+			categoryData.append("idCategory", answer["id_categoria"]);
+
+	       $.ajax({
+
+	       	url:"ajax/categories.ajax.php",
+			method: "POST",
+			data: categoryData,
+			cache: false,
+			contentType: false,
+			processData: false,
+			dataType: "json",
+			success:function(answer) {
+				
+				$("#editCategory").val(answer["id"]);
+				$("#editCategory").html(answer["categoria"]);
+
+
+				}
+
+	       });
+
+			$("#editCode").val(answer["codigo"]);
+			$("#editDescription").val(answer["descripcion"]);
+			$("#editStock").val(answer["stock"]);
+			$("#editPricePurchase").val(answer["precio_compra"]);
+			$("#editPriceSell").val(answer["precio_venta"]);
+			
+			if (answer["imagen"] != "") {
+
+				$("#currentImage").val(answer["imagen"]);
+
+				$(".preview").attr("src", answer["imagen"]);
+				
+			}
+
+		}
+
+	});
 
 });
+
 
 
 	
