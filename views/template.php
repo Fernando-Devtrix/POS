@@ -164,5 +164,6 @@
 <script src="views/js/users.js"></script>
 <script src="views/js/categories.js"></script>
 <script src="views/js/products.js"></script>
+<script src="views/js/clients.js"></script>
 </body>
 </html>

@@ -124,7 +124,7 @@ class UserModel {
 	}
 	
 	/*========================
-	=    Update Users Status =
+	=    Delete Users Status =
 	========================*/
 
 	static public function mdlDeleteUser($table, $data) {
