@@ -165,5 +165,6 @@
 <script src="views/js/categories.js"></script>
 <script src="views/js/products.js"></script>
 <script src="views/js/clients.js"></script>
+<script src="views/js/sells.js"></script>
 </body>
 </html>

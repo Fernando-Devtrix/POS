@@ -32,7 +32,7 @@
 
             <div class="box-header with-border"></div>
 
-              <form role="form" method="post" class="formSell">
+              <form role="form" method="post">
 
                 <div class="box-body">
                 
@@ -47,9 +47,7 @@
                       <div class="input-group">
                         
                         <span class="input-group-addon"><i class="fa fa-user"></i></span>
-                        <input type="text" class="form-control" id="newSeller" name="newSeller" value="<?php echo $_SESSION["nombre"]; ?>" readonly>
-
-                        <input type="hidden" name="idSeller"  value="<?php echo $_SESSION["id"]; ?>">
+                        <input type="text" class="form-control" id="newSeller" name="newSeller" value="Usuario Administrador" readonly>
 
                       </div>
 
@@ -64,30 +62,7 @@
                       <div class="input-group">
                         
                         <span class="input-group-addon"><i class="fa fa-key"></i></span>
-
-                        <?php 
-
-                          $item = null;
-                          $value = null;
-
-                          $sells = SellsController::ctrlShowSells($item, $value);
-
-                          if (!$sells) {
-                            
-                             echo '<input type="text" class="form-control" id="newPurchase" name="newPurchase" value="1001" readonly>';
-                          }else{
-
-                            foreach ($sells as $key => $value) {
-                              
-
-
-                            }
-
-                            $code = $value["codigo"] + 1;
-
-                              echo '<input type="text" class="form-control" id="newPurchase" name="newPurchase" value="'.$codigo.'" readonly>';
-                          }
-                        ?>
+                        <input type="text" class="form-control" id="newPurchase" name="newPurchase" value="1234" readonly>
 
                       </div>
 
@@ -107,21 +82,6 @@
 
                         <option value="">Seleccionar cliente</option>
 
-                         <?php 
-
-                          $item = null;
-                          $value = null;
-
-                          $categories = ClientsController::ctrlShowClients($item, $value);
-
-                          foreach ($categories as $key => $value) {
-                            
-                            echo '<option value="'.$value["id"].'">'.$value["nombre"].'</option>';
-
-                          }
-
-                         ?>
-
                         </select>
 
                         <span class="input-group-addon"><button type="button" class="btn btn-default btn-xs" data-toggle="modal" data-target="#modalAddClient" data-dismiss="modal">Agregar Cliente</button></span>
@@ -136,7 +96,41 @@
                     
                     <div class="form-group row newProduct">
 
-                     
+                      <!-- Producto Description -->
+
+                      <div class="col-xs-6" style="padding-right: 0px">
+                        
+                        <div class="input-group">
+                          
+                          <span class="input-group-addon"><button type="button" class="btn btn-danger btn-xs"><i class="fa fa-times"></i></button></span>
+
+                          <input type="text" class="form-control" id="addProduct" name="addProduct" placeholder="Descripción del producto" required>
+
+                        </div>
+
+                      </div>
+
+                      <!-- Producto Quantity -->
+
+                      <div class="col-xs-3">
+                        
+                        <input type="text" class="form-control" id="newProductQuantity" min="1" placeholder="0" required>
+
+                      </div>
+
+                      <!-- Product Price -->
+
+                      <div class="col-xs-3" style="padding-left: 0px">
+
+                        <div class="input-group">
+                          
+                          <span class="input-group-addon"><i class="ion ion-social-usd"></i></span>
+
+                          <input type="number" min="1" class="form-control" id="newProductPrice" placeholder="000000" readonly required>
+                          
+                        </div>
+                      
+                      </div>
                       
                     </div>
 
@@ -209,7 +203,7 @@
                     <hr>
     
                     <!--=====================================
-                    =        PAYMENT METHOD INPUT            =
+                    =        PAYMENT METHO INPUT            =
                     ======================================--> 
 
                     <div class="form-group row">
@@ -273,7 +267,7 @@
               
               <div class="box-body">
                 
-                <table class="table table-bordered table-striped dt-responsive sellsTable">
+                <table class="table table-bordered table-striped dt-responsive tables">
                   
                   <thead>
                     
@@ -288,7 +282,25 @@
 
                     </tr>
 
-                  </thead>                
+                  </thead>
+
+                  <tbody>
+                    
+                    <tr>
+                      <td>1</td>
+                      <td><img src="views/img/products/default/anonymous.png" class="img-thumbnail" width="40px" alt="photo"></td>
+                      <td>0123</td>
+                      <td>Lorem ipsum dolor sit Voluptates.</td>
+                      <td>20</td>
+                      <td>                        
+                        <div class="btn-group">
+                          <button type="button" class="btn btn-primary">Agregar</button>
+                        </div>
+                      </td>
+
+                    </tr>
+
+                  </tbody>
 
                 </table>
 
