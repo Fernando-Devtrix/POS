@@ -144,7 +144,7 @@
                     =        ADD PRODUCT BUTTON             =
                     ======================================-->  
 
-                    <button type="button" class="btn btn-default hidden-lg">Agregar Producto</button>
+                    <button type="button" class="btn btn-default hidden-lg btnAddProduct">Agregar Producto</button>
 
                     <hr>
 

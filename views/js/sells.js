@@ -108,7 +108,7 @@ $(".sellsTable tbody").on("click", "button.addProduct", function() {
                           
                           '<span class="input-group-addon"><button type="button" class="btn btn-danger btn-xs quitProduct" idProduct="'+idProduct+'"><i class="fa fa-times"></i></button></span>'+
 
-                          '<input type="text" class="form-control" id="addProduct" name="addProduct" value="'+description+'" readonly required>'+
+                          '<input type="text" class="form-control addProduct" name="addProduct" value="'+description+'" readonly required>'+
 
                        '</div>'+
 
@@ -118,7 +118,7 @@ $(".sellsTable tbody").on("click", "button.addProduct", function() {
 
                       '<div class="col-xs-3">'+
                         
-                        '<input type="text" class="form-control" id="newProductQuantity" min="1" value="1" stock="'+stock+'" required>'+
+                        '<input type="text" class="form-control newProductQuantity" min="1" value="1" stock="'+stock+'" required>'+
 
                       '</div>'+
 
@@ -130,7 +130,7 @@ $(".sellsTable tbody").on("click", "button.addProduct", function() {
                           
                           '<span class="input-group-addon"><i class="ion ion-social-usd"></i></span>'+
 
-                          '<input type="number" min="1" class="form-control" id="newProductPrice" value="'+price+'" readonly required>'+
+                          '<input type="number" min="1" class="form-control newProductPrice" value="'+price+'" readonly required>'+
                           
                         '</div>'+
                       
@@ -205,3 +205,134 @@ $(".formSell").on("click", "button.quitProduct", function() {
 	  $("button.retrieveButton[idProduct='"+idProduct+"']").addClass("btn-primary addProduct");
 
 });
+
+/*========================================================
+=     Adding products from the button for devices   	 =
+========================================================*/
+
+var numProduct = 0;
+
+$(".btnAddProduct").click(function() {
+
+	numProduct ++;
+
+	var data = new FormData();
+	data.append("getAllProducts", "ok");
+
+	$.ajax({
+
+		url:"ajax/products.ajax.php",
+		method: "POST",
+      	data: data,
+      	cache: false,
+      	contentType: false,
+      	processData: false,
+      	dataType:"json",
+      	success:function(answer) {
+
+      		$(".newProduct").append(
+      		
+      		 '<div class="row" style="padding: 5px 15px">'+
+
+					 '<!-- Producto Description -->'+
+
+                      '<div class="col-xs-6" style="padding-right: 0px">'+
+                        
+                        '<div class="input-group">'+
+                          
+                          '<span class="input-group-addon"><button type="button" class="btn btn-danger btn-xs quitProduct" idProduct><i class="fa fa-times"></i></button></span>'+
+
+                          '<select class="form-control newProductDescription" id="producto'+numProduct+'" idProduct name="newProductDescription" required>'+
+
+                          '<option>Seleccione Producto</option>'+
+
+                          '</select>'+
+
+                       '</div>'+
+
+                      '</div>'+
+
+                      '<!-- Producto Quantity -->'+
+
+                      '<div class="col-xs-3 inputQuantity">'+
+                        
+                        '<input type="text" class="form-control newProductQuantity" min="1" value="1" stock required>'+
+
+                      '</div>'+
+
+                      '<!-- Product Price -->'+
+
+                      '<div class="col-xs-3 inputPrice" style="padding-left: 0px">'+
+
+                        '<div class="input-group">'+
+                          
+                          '<span class="input-group-addon"><i class="ion ion-social-usd"></i></span>'+
+
+                          '<input type="number" min="1" class="form-control newProductPrice" value="" readonly required>'+
+                          
+                        '</div>'+
+                      
+                      '</div>'+
+
+                 '</div>'
+
+            );
+
+            // ADD PRODUCTS TO THE SELECT
+
+            answer.forEach(functionForEach);
+
+            function functionForEach(item, index){
+
+            	if (item.stock != 0) {
+
+            	$("#producto"+numProduct).append(
+
+            		'<option idProduct="'+item.id+'" value="'+item.descripcion+'">'+item.descripcion+'</option>'
+
+            		);
+            		
+            	}
+            	
+            }
+
+      	}
+
+	});
+
+});
+
+/*========================
+=     Select Product   	 =
+========================*/
+
+$(".formSell").on("change", "select.newProductDescription", function() {
+
+	var productName = $(this).val();
+
+	var newProductPrice = $(this).parent().parent().parent().children(".inputPrice").children().children(".newProductPrice");
+	var newProductQuantity = $(this).parent().parent().parent().children(".inputQuantity").children(".newProductQuantity");
+
+	var data = new FormData();
+	data.append("productName", productName);
+
+	$.ajax({
+
+		url:"ajax/products.ajax.php",
+		method: "POST",
+      	data: data,
+      	cache: false,
+      	contentType: false,
+      	processData: false,
+      	dataType:"json",
+      	success:function(answer) {
+      		
+      		$(newProductQuantity).attr("stock", answer["stock"]);
+      		$(newProductPrice).val(answer["precio_venta"]);
+
+      	}
+
+    });
+
+});
+

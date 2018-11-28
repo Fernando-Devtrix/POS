@@ -22,15 +22,39 @@ class AjaxProducts{
   }
 
   public $idProduct;
+  public $getAllProducts;
+  public $productName;
 
   public function ajaxEditProduct() {
 
-    $item = "id";
-    $value = $this->idProduct;
+    if ($this->getAllProducts == "ok") {
 
-    $answer = ProductsController::ctrlShowProducts($item, $value);
+       $item = null;
+       $value = null;
 
-    echo json_encode($answer);
+       $answer = ProductsController::ctrlShowProducts($item, $value);
+
+       echo json_encode($answer);
+        
+    }else if($this->productName != "") {
+      
+       $item = "descripcion";
+       $value = $this->productName;
+
+       $answer = ProductsController::ctrlShowProducts($item, $value);
+
+       echo json_encode($answer);
+
+    }else{
+
+       $item = "id";
+       $value = $this->idProduct;
+
+       $answer = ProductsController::ctrlShowProducts($item, $value);
+
+       echo json_encode($answer);
+
+    }
 
   }
 
@@ -57,7 +81,20 @@ if(isset($_POST["idProduct"])){
 
 }
 
+if(isset($_POST["getAllProducts"])){
 
+  $getAllProducts = new AjaxProducts();
+  $getAllProducts -> getAllProducts = $_POST["getAllProducts"];
+  $getAllProducts -> ajaxEditProduct();
 
+}
+
+if(isset($_POST["productName"])){
+
+  $getAllProducts = new AjaxProducts();
+  $getAllProducts -> productName = $_POST["productName"];
+  $getAllProducts -> ajaxEditProduct();
+
+}
 
 
