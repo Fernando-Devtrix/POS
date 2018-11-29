@@ -118,19 +118,19 @@ $(".sellsTable tbody").on("click", "button.addProduct", function() {
 
                       '<div class="col-xs-3">'+
                         
-                        '<input type="text" class="form-control newProductQuantity" min="1" value="1" stock="'+stock+'" required>'+
+                        '<input type="number" class="form-control newProductQuantity" min="1" value="1" stock="'+stock+'" required>'+
 
                       '</div>'+
 
                       '<!-- Product Price -->'+
 
-                      '<div class="col-xs-3" style="padding-left: 0px">'+
+                      '<div class="col-xs-3 inputPrice" style="padding-left: 0px">'+
 
                         '<div class="input-group">'+
                           
                           '<span class="input-group-addon"><i class="ion ion-social-usd"></i></span>'+
 
-                          '<input type="number" min="1" class="form-control newProductPrice" value="'+price+'" readonly required>'+
+                          '<input type="text" class="form-control newProductPrice" initPrice="'+price+'" name="newProductPrice" value="'+price+'" readonly required>'+
                           
                         '</div>'+
                       
@@ -139,6 +139,18 @@ $(".sellsTable tbody").on("click", "button.addProduct", function() {
                  '</div>'
 
 			);
+
+			//Sum Products
+
+			sumTotalPrices();
+
+			//Add Tax
+
+			addTax();
+
+			// Add number format
+
+			$(".newProductPrice").number(true, 2);
 
       	}
 
@@ -204,6 +216,23 @@ $(".formSell").on("click", "button.quitProduct", function() {
 
 	  $("button.retrieveButton[idProduct='"+idProduct+"']").addClass("btn-primary addProduct");
 
+	  if ($(".newProduct").children().length == 0) {
+
+	  	$("#newTaxSell").val(0)
+	  	$("#newTotalSell").val(0)
+	  	$("#newTotalSell").attr("total", 0)
+
+	  }else{
+
+		  //Sum Products
+
+		  sumTotalPrices();
+
+		  //Add tax
+
+		  addTax();	  	
+	  }
+
 });
 
 /*========================================================
@@ -234,7 +263,7 @@ $(".btnAddProduct").click(function() {
       		
       		 '<div class="row" style="padding: 5px 15px">'+
 
-					 '<!-- Producto Description -->'+
+					 '<!-- Product Description -->'+
 
                       '<div class="col-xs-6" style="padding-right: 0px">'+
                         
@@ -252,11 +281,11 @@ $(".btnAddProduct").click(function() {
 
                       '</div>'+
 
-                      '<!-- Producto Quantity -->'+
+                      '<!-- Product Quantity -->'+
 
                       '<div class="col-xs-3 inputQuantity">'+
                         
-                        '<input type="text" class="form-control newProductQuantity" min="1" value="1" stock required>'+
+                        '<input type="number" class="form-control newProductQuantity" name="newProductQuantity" min="1" value="1" stock required>'+
 
                       '</div>'+
 
@@ -268,7 +297,7 @@ $(".btnAddProduct").click(function() {
                           
                           '<span class="input-group-addon"><i class="ion ion-social-usd"></i></span>'+
 
-                          '<input type="number" min="1" class="form-control newProductPrice" value="" readonly required>'+
+                          '<input type="text" class="form-control newProductPrice" initPrice="" name="newProductPrice" readonly required>'+
                           
                         '</div>'+
                       
@@ -293,6 +322,18 @@ $(".btnAddProduct").click(function() {
             		);
             		
             	}
+
+            	//Sum Products
+
+			 	sumTotalPrices();
+
+			 	//Add Tax
+
+			 	addTax();
+
+			 	// Add number format
+
+				$(".newProductPrice").number(true, 2);
             	
             }
 
@@ -329,6 +370,7 @@ $(".formSell").on("change", "select.newProductDescription", function() {
       		
       		$(newProductQuantity).attr("stock", answer["stock"]);
       		$(newProductPrice).val(answer["precio_venta"]);
+      		$(newProductPrice).attr("initPrice", answer["precio_venta"]);
 
       	}
 
@@ -336,3 +378,198 @@ $(".formSell").on("change", "select.newProductDescription", function() {
 
 });
 
+/*========================
+=     Change Quantity 	 =
+========================*/
+
+$(".formSell").on("change", "input.newProductQuantity", function() {
+
+	var price = $(this).parent().parent().children(".inputPrice").children().children(".newProductPrice");
+
+	var finalPrice = $(this).val() * price.attr("initPrice");
+
+	price.val(finalPrice);
+
+	if(Number($(this).val()) > Number($(this).attr("stock"))) {
+
+
+		/*============================================================
+		=     If quantity is more than stock return initial value 	 =
+		============================================================*/
+
+		$(this).val(1);
+
+		var finalPrice = $(this).val() * price.attr("initPrice");
+
+		price.val(finalPrice);
+
+		sumTotalPrices();
+
+		swal({
+	      title: "La cantidad supera el Stock",
+	      text: "¡Sólo hay "+$(this).attr("stock")+" unidades!",
+	      type: "error",
+	      confirmButtonText: "¡Cerrar!"
+	    });
+
+	}
+
+	//Sum Products
+
+	sumTotalPrices();
+
+	//Add Tax
+
+	addTax();
+
+});
+
+/*====================================
+=            Sum Prodcuts            =
+==================================== */
+
+function sumTotalPrices() {
+
+	var priceItem = $(".newProductPrice");
+	var arraySumPrice = [];
+
+	for (var i = 0; i < priceItem.length; i++) {
+		
+		arraySumPrice.push(Number($(priceItem[i]).val()));
+		
+	}
+
+	var sumTotalPrice = arraySumPrice.reduce(function sumArrayPrices(total, number) {
+
+		return total + number;
+
+	});	
+
+	$("#newTotalSell").val(sumTotalPrice);
+	$("#newTotalSell").attr("total", sumTotalPrice);
+}
+
+/*=====================================
+=            Function Add Tax         =
+==================================== */
+
+function addTax() {
+
+	var tax = $("#newTaxSell").val();
+	var totalPrice = $("#newTotalSell").attr("total");
+
+	var taxPrice = Number(totalPrice * tax / 100);
+
+	var totalWithTax =  Number(taxPrice) + Number(totalPrice);
+
+	$("#newTotalSell").val(totalWithTax);
+	
+	$("#newTaxPrice").val(taxPrice);
+
+	$("#newTaxNet").val(totalPrice);
+
+}
+
+/*=====================================
+=           When tax changes         =
+==================================== */
+
+$("#newTaxSell").change(function() {
+
+	addTax();
+
+});
+
+// Add number format to the final price
+
+$("#newTotalSell").number(true, 2);
+
+/*=====================================
+=       Select payment method         =
+==================================== */
+
+$("#newPaymentMethod").change(function() {
+
+	var method = $(this).val();
+
+	if (method == "Efectivo") {
+
+		$(this).parent().parent().removeClass("col-xs-6");
+
+		$(this).parent().parent().addClass("col-xs-4");
+
+		$(this).parent().parent().parent().children(".paymentMethodBoxes").html(
+
+			'<div class="col-xs-4">'+
+
+				'<div class="input-group">'+
+
+					'<span class="input-group-addon"><i class="ion ion-social-usd"></i></span>'+
+
+					'<input type="text" class="form-control newCashValue" placeholder="000000"/>'+
+
+				'</div>'+
+
+			'</div>'+
+
+			'<div class="col-xs-4 getCashChange" style="padding-left:0px">'+
+
+				'<div class="input-group">'+
+
+					'<span class="input-group-addon"><i class="ion ion-social-usd"></i></span>'+
+
+					'<input type="text"  class="form-control newCashChange" name="newCashChange" placeholder="000000" readonly required/>'+
+
+				'</div>'+			
+
+			'</div>'
+
+
+		);
+
+		// Add number format
+
+		$(".newCashChange").number(true, 2);
+		$(".newCashValue").number(true, 2);
+
+	}else{
+
+		$(this).parent().parent().removeClass("col-xs-4");
+
+		$(this).parent().parent().addClass("col-xs-6");
+
+		$(this).parent().parent().parent().children(".paymentMethodBoxes").html(
+
+		    '<div class="col-xs-6" style="padding-left: 0px">'+
+                        
+                '<div class="input-group">'+
+
+ 	                '<input type="text" class="form-control" id="newTransactionCode" name="newTransactionCode" placeholder="Código de transaction" required>'+
+
+                    '<span class="input-group-addon"><i class="fa fa-lock"></i></span>'+
+                                                                 
+                '</div>'+
+                    
+            '</div>'
+
+		);
+
+	}
+
+});
+
+/*=====================================
+=           Efective change           =
+==================================== */
+
+$(".formSell").on("change", "input.newCashValue", function() {
+
+	var cash = $(this).val();
+
+	var change = Number(cash) - Number($("#newTotalSell").val());
+
+	var newCashChange = $(this).parent().parent().parent().children(".getCashChange").children().children(".newCashChange");
+
+	newCashChange.val(change);
+
+});

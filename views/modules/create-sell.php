@@ -177,7 +177,12 @@
                                 
                                 <div class="input-group">
                                   
-                                  <input type="number" class="form-control" min="0" id="newTaxSell" name="newTaxSell" placeholder="0" required>
+                                  <input type="number" class="form-control input-lg" min="0" id="newTaxSell" name="newTaxSell" placeholder="0" required>
+
+                                  <input type="hidden" name="newTaxPrice" id="newTaxPrice" required>
+
+                                  <input type="hidden" name="newTaxNet" id="newTaxNet" required>
+
                                   <span class="input-group-addon"><i class="fa fa-percent"></i></span>
 
                                 </div>
@@ -190,7 +195,7 @@
 
                                   <span class="input-group-addon"><i class="ion ion-social-usd"></i></span>
                                   
-                                  <input type="numer" min="1" class="form-control" id="newTotalSell" name="newTotalSell" placeholder="00000" readonly required>
+                                  <input type="text" class="form-control input-lg" id="newTotalSell" name="newTotalSell" placeholder="00000" total="" readonly required>
 
                                 </div>
 
@@ -220,16 +225,16 @@
                           
                           <select class="form-control" name="newPaymentMethod" id="newPaymentMethod" required>
                             <option value="">Seleccione método de pago</option>
-                            <option value="cash">Efectivo</option>
-                            <option value="creditCard">Tarjeta de Crédito</option>
-                            <option value="debitCard">Tarjeta de Debito</option>
+                            <option value="Efectivo">Efectivo</option>
+                            <option value="TC">Tarjeta de Crédito</option>
+                            <option value="TD">Tarjeta de Debito</option>
                           </select>
                           
                         </div>
                         
                       </div>
 
-                        <div class="col-xs-6" style="padding-left: 0px">
+                       <!--  <div class="col-xs-6" style="padding-left: 0px">
                         
                         <div class="input-group">
 
@@ -239,7 +244,9 @@
                                                                  
                         </div>
                         
-                      </div>
+                      </div> -->
+
+                      <div class="paymentMethodBoxes"></div>
 
                     </div>  
 
