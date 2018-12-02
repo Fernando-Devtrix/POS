@@ -100,7 +100,7 @@ $(".sellsTable tbody").on("click", "button.addProduct", function() {
 
 				 '<div class="row" style="padding: 5px 15px">'+
 
-					 '<!-- Producto Description -->'+
+					 '<!-- Product Description -->'+
 
                       '<div class="col-xs-6" style="padding-right: 0px">'+
                         
@@ -108,17 +108,17 @@ $(".sellsTable tbody").on("click", "button.addProduct", function() {
                           
                           '<span class="input-group-addon"><button type="button" class="btn btn-danger btn-xs quitProduct" idProduct="'+idProduct+'"><i class="fa fa-times"></i></button></span>'+
 
-                          '<input type="text" class="form-control addProduct" name="addProduct" value="'+description+'" readonly required>'+
+                          '<input type="text" class="form-control addProduct newProductDescription" idProduct="'+idProduct+'" name="addProduct" value="'+description+'" readonly required>'+
 
                        '</div>'+
 
                       '</div>'+
 
-                      '<!-- Producto Quantity -->'+
+                      '<!-- Product Quantity -->'+
 
                       '<div class="col-xs-3">'+
                         
-                        '<input type="number" class="form-control newProductQuantity" min="1" value="1" stock="'+stock+'" required>'+
+                        '<input type="number" class="form-control newProductQuantity" min="1" value="1" stock="'+stock+'" newStock="'+Number(stock-1)+'" required>'+
 
                       '</div>'+
 
@@ -147,6 +147,10 @@ $(".sellsTable tbody").on("click", "button.addProduct", function() {
 			//Add Tax
 
 			addTax();
+
+			// To list products
+
+			toListProducts();
 
 			// Add number format
 
@@ -220,6 +224,7 @@ $(".formSell").on("click", "button.quitProduct", function() {
 
 	  	$("#newTaxSell").val(0)
 	  	$("#newTotalSell").val(0)
+	  	$("#totalSell").val(0)
 	  	$("#newTotalSell").attr("total", 0)
 
 	  }else{
@@ -231,6 +236,10 @@ $(".formSell").on("click", "button.quitProduct", function() {
 		  //Add tax
 
 		  addTax();	  	
+
+		  // To list products
+
+		  toListProducts();
 	  }
 
 });
@@ -285,7 +294,7 @@ $(".btnAddProduct").click(function() {
 
                       '<div class="col-xs-3 inputQuantity">'+
                         
-                        '<input type="number" class="form-control newProductQuantity" name="newProductQuantity" min="1" value="1" stock required>'+
+                        '<input type="number" class="form-control newProductQuantity" name="newProductQuantity" min="1" value="1" stock newStock required>'+
 
                       '</div>'+
 
@@ -369,8 +378,13 @@ $(".formSell").on("change", "select.newProductDescription", function() {
       	success:function(answer) {
       		
       		$(newProductQuantity).attr("stock", answer["stock"]);
+      		$(newProductQuantity).attr("newStock", Number(answer["stock"])-1);
       		$(newProductPrice).val(answer["precio_venta"]);
       		$(newProductPrice).attr("initPrice", answer["precio_venta"]);
+
+      	 	// To list products
+
+			toListProducts();
 
       	}
 
@@ -389,6 +403,10 @@ $(".formSell").on("change", "input.newProductQuantity", function() {
 	var finalPrice = $(this).val() * price.attr("initPrice");
 
 	price.val(finalPrice);
+
+	var newStock = Number($(this).attr("stock")) - $(this).val();
+
+	$(this).attr("newStock", newStock);
 
 	if(Number($(this).val()) > Number($(this).attr("stock"))) {
 
@@ -422,6 +440,10 @@ $(".formSell").on("change", "input.newProductQuantity", function() {
 
 	addTax();
 
+	// To list products
+
+	toListProducts();
+
 });
 
 /*====================================
@@ -446,7 +468,8 @@ function sumTotalPrices() {
 	});	
 
 	$("#newTotalSell").val(sumTotalPrice);
-	$("#newTotalSell").attr("total", sumTotalPrice);
+	$("#totalSell").val(sumTotalPrice);
+    $("#newTotalSell").attr("total", sumTotalPrice);
 }
 
 /*=====================================
@@ -463,6 +486,7 @@ function addTax() {
 	var totalWithTax =  Number(taxPrice) + Number(totalPrice);
 
 	$("#newTotalSell").val(totalWithTax);
+	$("#totalSell").val(totalWithTax);
 	
 	$("#newTaxPrice").val(taxPrice);
 
@@ -506,19 +530,19 @@ $("#newPaymentMethod").change(function() {
 
 					'<span class="input-group-addon"><i class="ion ion-social-usd"></i></span>'+
 
-					'<input type="text" class="form-control newCashValue" placeholder="000000"/>'+
+					'<input type="text" class="form-control" id="newCashValue" placeholder="000000" required/>'+
 
 				'</div>'+
 
 			'</div>'+
 
-			'<div class="col-xs-4 getCashChange" style="padding-left:0px">'+
+			'<div class="col-xs-4" id="getCashChange" style="padding-left:0px">'+
 
 				'<div class="input-group">'+
 
 					'<span class="input-group-addon"><i class="ion ion-social-usd"></i></span>'+
 
-					'<input type="text"  class="form-control newCashChange" name="newCashChange" placeholder="000000" readonly required/>'+
+					'<input type="text"  class="form-control" id="newCashChange" name="newCashChange" placeholder="000000" readonly required/>'+
 
 				'</div>'+			
 
@@ -529,8 +553,12 @@ $("#newPaymentMethod").change(function() {
 
 		// Add number format
 
-		$(".newCashChange").number(true, 2);
-		$(".newCashValue").number(true, 2);
+		$("#newCashChange").number(true, 2);
+		$("#newCashValue").number(true, 2);
+
+		// List method in the input
+
+		listPaymentMethods ();
 
 	}else{
 
@@ -562,14 +590,90 @@ $("#newPaymentMethod").change(function() {
 =           Efective change           =
 ==================================== */
 
-$(".formSell").on("change", "input.newCashValue", function() {
+$(".formSell").on("change", "input#newCashValue", function() {
 
 	var cash = $(this).val();
 
 	var change = Number(cash) - Number($("#newTotalSell").val());
 
-	var newCashChange = $(this).parent().parent().parent().children(".getCashChange").children().children(".newCashChange");
+	var newCashChange = $(this).parent().parent().parent().children("#getCashChange").children().children("#newCashChange");
 
 	newCashChange.val(change);
 
 });
+
+/*=====================================
+=           Transaction shift         =
+==================================== */
+
+$(".formSell").on("change", "input#newTransactionCode", function() {
+
+	// List method in the input
+
+	listPaymentMethods ();
+
+});
+
+/*=====================================
+=           List all Products         =
+==================================== */
+
+function toListProducts() {
+
+	var listProducts = [];
+
+	var description = $(".newProductDescription");
+
+	var quantity = $(".newProductQuantity");
+
+	var price = $(".newProductPrice");
+
+		for (var i = 0; i < description.length; i++) {
+
+			listProducts.push({"id" : $(description[i]).attr("idProduct"),
+							   "descripcion" : $(description[i]).val(),
+							   "cantidad" : $(quantity[i]).val(),
+							   "stock" : $(quantity[i]).attr("newStock"),
+							   "precio" : $(price[i]).attr("initPrice"),
+							   "total" : $(price[i]).val()
+
+		});
+		
+		$("#listProducts").val(JSON.stringify(listProducts));
+
+	}
+
+};
+
+/*=====================================
+=           List Payment Method       =
+==================================== */
+
+function listPaymentMethods() {
+
+	//var methodsList = "";
+
+	if ($("#newPaymentMethod").val() == "Efectivo") {
+
+		$("#listPaymentMethod").val("Efectivo");
+
+	}else{
+
+		$("#listPaymentMethod").val($("#newPaymentMethod").val()+"-"+$("#newTransactionCode").val());
+
+	}
+
+}
+
+/*================================
+=        EDIT SELLS              =
+=================================*/
+
+$(".btnEditSell").click(function() {
+
+	var idSell = $(this).attr("idSell"); 
+
+	window.location = "index.php?route=edit-sell&idSell="+idSell;
+	
+});
+

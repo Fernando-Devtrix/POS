@@ -38,6 +38,27 @@
                 
                   <div class="box">
 
+                      <?php 
+
+                          $item = "id";
+                          $value = $_GET["idSell"];
+
+                          $sell = SellsController::ctrlShowSells($item, $value);
+
+                          $itemUser = "id";
+                          $valueUser = $sell["id_vendedor"];
+
+                          $seller = UserController::ctrlShowUser($itemUser ,$valueUser);
+
+                          $itemClient = "id";
+                          $valueClient = $sell["id_cliente"];
+
+                          $cliente = ClientsController::ctrlShowClients($itemClient ,$valueClient);
+
+                          $taxPercentage = $sell["impuesto"] * 100 / $sell["neto"];
+
+                      ?>
+
                    <!--=====================================
                     =         SELLER INPUT                 =
                     ======================================-->  
@@ -47,9 +68,9 @@
                       <div class="input-group">
                         
                         <span class="input-group-addon"><i class="fa fa-user"></i></span>
-                        <input type="text" class="form-control" id="newSeller" value="<?php echo $_SESSION["nombre"]; ?>" readonly>
+                        <input type="text" class="form-control" id="newSeller" value="<?php echo $seller["nombre"]; ?>" readonly>
 
-                        <input type="hidden" name="idSeller"  value="<?php echo $_SESSION["id"]; ?>">
+                        <input type="hidden" name="idSeller"  value="<?php echo $seller["id"]; ?>">
 
                       </div>
 
@@ -65,31 +86,8 @@
                         
                         <span class="input-group-addon"><i class="fa fa-key"></i></span>
 
-                        <?php 
-
-                          $item = null;
-                          $value = null;
-
-                          $sells = SellsController::ctrlShowSells($item, $value);
-
-                          if (!$sells) {
-                            
-                             echo '<input type="text" class="form-control" id="newPurchase" name="newPurchase" value="1001" readonly>';
-
-                          }else{
-
-                            foreach ($sells as $key => $value) {
-                              
-                               // var_dump($value["codigo"]);
-
-                            }
-
-                            $code = $value["codigo"] + 1;
-
-                              echo '<input type="text" class="form-control" id="newPurchase" name="newPurchase" value="'.$code.'" readonly>';
-                          }
-                        ?>
-
+                        <input type="text" class="form-control" id="editPurchase" name="editPurchase" value="<?php echo $sell["codigo"]; ?>" readonly>
+                                                
                       </div>
 
                     </div>
@@ -106,7 +104,7 @@
 
                         <select class="form-control" id="addClient" name="addClient" required>
 
-                        <option value="">Seleccionar cliente</option>
+                        <option value="<?php echo $cliente["id"]; ?>"><?php echo $cliente["nombre"]; ?></option>
 
                          <?php 
 
@@ -137,7 +135,61 @@
                     
                     <div class="form-group row newProduct">
 
-                     
+                    <?php 
+
+                      $listProducts = json_decode($sell["productos"], true);
+
+                      foreach ($listProducts as $key => $value) {
+
+                        $item = "id";
+                        $val = $value["id"];
+
+                        $productAnswer = ProductsController::ctrlShowProducts($item, $val);
+
+                        $previousStock = ($productAnswer["stock"] + $value["cantidad"]);
+                        
+                        echo '<div class="row" style="padding: 5px 15px">
+
+                                <!-- Product Description -->
+
+                                <div class="col-xs-6" style="padding-right: 0px">
+                        
+                                  <div class="input-group">
+                          
+                                    <span class="input-group-addon"><button type="button" class="btn btn-danger btn-xs quitProduct" idProduct="'.$value["id"].'"><i class="fa fa-times"></i></button></span>
+
+                                    <input type="text" class="form-control addProduct newProductDescription" idProduct="'.$value["id"].'" name="addProduct" value="'.$value["descripcion"].'" readonly required>
+
+                                  </div>
+
+                                </div>
+
+                              <!-- Product Quantity -->
+
+                              <div class="col-xs-3">
+                        
+                                <input type="number" class="form-control newProductQuantity" min="1" value="'.$value["cantidad"].'" stock="'.$previousStock.'" newStock="'.$value["stock"].'" required>
+
+                             </div>
+
+                              <!-- Product Price -->
+
+                              <div class="col-xs-3 inputPrice" style="padding-left: 0px">
+
+                                <div class="input-group">
+                        
+                                  <span class="input-group-addon"><i class="ion ion-social-usd"></i></span>
+
+                                  <input type="text" class="form-control newProductPrice" initPrice="'.$productAnswer["precio_venta"].'" name="newProductPrice" value="'.$value["precio"].'" readonly required>
+                          
+                                </div>
+                      
+                              </div>
+
+                          </div>';
+                      }
+
+                    ?>                     
                       
                     </div>
 
@@ -180,11 +232,11 @@
                                 
                                 <div class="input-group">
                                   
-                                  <input type="number" class="form-control input-lg" min="0" id="newTaxSell" name="newTaxSell" placeholder="0" required>
+                                  <input type="number" class="form-control input-lg" min="0" id="newTaxSell" name="newTaxSell" placeholder="0" value="<?php echo $taxPercentage; ?>" required>
 
-                                  <input type="hidden" name="newTaxPrice" id="newTaxPrice" required>
+                                  <input type="hidden" name="newTaxPrice" id="newTaxPrice" value="<?php echo $sell["impuesto"]; ?>" required>
 
-                                  <input type="hidden" name="newTaxNet" id="newTaxNet" required>
+                                  <input type="hidden" name="newTaxNet" id="newTaxNet" value="<?php echo $sell["neto"]; ?>" required>
 
                                   <span class="input-group-addon"><i class="fa fa-percent"></i></span>
 
@@ -198,9 +250,9 @@
 
                                   <span class="input-group-addon"><i class="ion ion-social-usd"></i></span>
                                   
-                                  <input type="text" class="form-control input-lg" id="newTotalSell" name="newTotalSell" placeholder="00000" total="" readonly required>
+                                  <input type="text" class="form-control input-lg" id="newTotalSell" name="newTotalSell" placeholder="00000" total="" value="<?php echo $sell["total"]; ?>" readonly required>
 
-                                  <input type="hidden" name="totalSell" id="totalSell">
+                                  <input type="hidden" name="totalSell" value="<?php echo $sell["total"]; ?>" id="totalSell">
 
                                 </div>
 
@@ -253,18 +305,12 @@
 
               <div class="box-footer">  
 
-                <button type="submit" class="btn btn-primary pull-right">Guardar venta</button>
+                <button type="submit" class="btn btn-primary pull-right">Guardar cambios</button>
 
               </div>
 
             </form>
-    
-            <?php 
 
-              $storeSell = new SellsController();
-              $storeSell -> ctrlCreateSell();
-
-            ?>
 
            </div>
 

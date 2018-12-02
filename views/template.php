@@ -128,6 +128,7 @@
           $_GET["route"] == "clients" ||
           $_GET["route"] == "sells" ||
           $_GET["route"] == "create-sell" ||
+          $_GET["route"] == "edit-sell" ||
           $_GET["route"] == "reports" ||
           $_GET["route"] == "exit") {
       

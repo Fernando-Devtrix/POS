@@ -59,39 +59,63 @@
          </thead>
 
          <tbody>
-           
-          <tr>
 
-            <td>1</td>
+          <?php 
 
-            <td>12345</td>
+          $item = null;
+          $value = null;
 
-            <td>Luis Juarez</td>
+          $answer = SellsController::ctrlShowSells($item, $value);
 
-            <td>Juan</td>
-
-            <td>TC-68564855</td>
-
-            <td>$ 100</td>
-
-            <td>$ 120</td>
-
-            <td>2017-27-07 12:05:23</td>
+          foreach ($answer as $key => $value) {
             
-            <td>
-              
-              <div class="btn-group">
+            echo '<tr>
+
+              <td>'.($key+1).'</td>
+
+              <td>'.$value["codigo"].'</td>';
+
+              $itemClient = "id";
+              $valueClient = $value["id_cliente"];
+
+              $answerClient = ClientsController::ctrlShowClients($itemClient, $valueClient);
+
+              echo '<td>'.$answerClient["nombre"].'</td>';
+
+              $itemUser = "id";
+              $valueUser = $value["id_vendedor"];
+
+              $answerUser = UserController::ctrlShowUser($itemUser, $valueUser);
+
+              echo '<td>'.$answerUser["nombre"].'</td>
+
+               <td>'.$value["metodo_pago"].'</td>
+
+               <td>'.number_format($value["neto"],2).'</td>
+
+               <td>'.number_format($value["total"],2).'</td>
+
+               <td>'.$value["fecha"].'</td>
                 
-                <button class="btn btn-info"><i class="fa fa-print"></i></button>
-                
-                <button class="btn btn-danger"><i class="fa fa-times"></i></button>
+               <td>
+                  
+                  <div class="btn-group">
+                    
+                    <button class="btn btn-info"><i class="fa fa-print"></i></button>
+                    
+                    <button class="btn btn-warning btnEditSell" idSell="'.$value["id"].'"><i class="fa fa-pencil"></i></button>
+                    
+                    <button class="btn btn-danger"><i class="fa fa-times"></i></button>
 
-              </div>
+                  </div>
 
-            </td>
+                </td>
 
-          </tr>
+              </tr>';
+            }
 
+          ?>
+           
          </tbody>
 
        </table>
