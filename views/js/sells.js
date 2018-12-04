@@ -677,3 +677,67 @@ $(".btnEditSell").click(function() {
 	
 });
 
+/*==========================================================================
+=      DISABLED THE BUTTONS WHEN A PRODUCT WAS ALREADY SELECTED            =
+===========================================================================*/
+
+function quitAddProduct() {
+
+		var idProducts = $(".quitProduct");
+
+		var tableButtons = $(".sellsTable tbody button.addProduct");
+
+		for (var i = 0; i < idProducts.length; i++) {
+			
+			var button = $(idProducts[i]).attr("idProduct");
+
+			for (var j = 0; j < tableButtons.length; j++) {
+
+				if ($(tableButtons[j]).attr("idProduct") == button) {
+
+					$(tableButtons[j]).removeClass("btn-primary addProduct");
+					$(tableButtons[j]).addClass("btn-default");
+			}
+
+		}
+
+	}
+
+}
+
+
+$('.sellsTable').on('draw.dt', function() {
+
+	quitAddProduct();
+
+});
+
+
+/*================================
+=        DELETE SELLS            =
+=================================*/
+
+$(".btnDeleteSell").click(function(){
+
+	idSell = $(this).attr("idSell");
+
+	 swal({
+        title: '¿Está seguro de borrar la venta?',
+        text: "¡Si no lo está puede cancelar la accíón!",
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        cancelButtonText: 'Cancelar',
+        confirmButtonText: 'Si, borrar venta!'
+      }).then((result) => {
+
+      	if (result.value) {
+
+      		window.location = "index.php?route=sells&idSell="+idSell;
+
+      	}
+
+      });
+
+});

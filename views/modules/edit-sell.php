@@ -146,7 +146,7 @@
 
                         $productAnswer = ProductsController::ctrlShowProducts($item, $val);
 
-                        $previousStock = ($productAnswer["stock"] + $value["cantidad"]);
+                        $previousStock = $productAnswer["stock"] + $value["cantidad"];
                         
                         echo '<div class="row" style="padding: 5px 15px">
 
@@ -158,7 +158,7 @@
                           
                                     <span class="input-group-addon"><button type="button" class="btn btn-danger btn-xs quitProduct" idProduct="'.$value["id"].'"><i class="fa fa-times"></i></button></span>
 
-                                    <input type="text" class="form-control addProduct newProductDescription" idProduct="'.$value["id"].'" name="addProduct" value="'.$value["descripcion"].'" readonly required>
+                                    <input type="text" class="form-control newProductDescription" idProduct="'.$value["id"].'" name="addProduct" value="'.$value["descripcion"].'" readonly required>
 
                                   </div>
 
@@ -166,9 +166,9 @@
 
                               <!-- Product Quantity -->
 
-                              <div class="col-xs-3">
+                              <div class="col-xs-3">  
                         
-                                <input type="number" class="form-control newProductQuantity" min="1" value="'.$value["cantidad"].'" stock="'.$previousStock.'" newStock="'.$value["stock"].'" required>
+                                <input type="number" class="form-control newProductQuantity" name="newProductQuantity" min="1" value="'.$value["cantidad"].'" stock="'.$previousStock.'" newStock="'.$value["stock"].'" required>
 
                              </div>
 
@@ -180,7 +180,7 @@
                         
                                   <span class="input-group-addon"><i class="ion ion-social-usd"></i></span>
 
-                                  <input type="text" class="form-control newProductPrice" initPrice="'.$productAnswer["precio_venta"].'" name="newProductPrice" value="'.$value["precio"].'" readonly required>
+                                  <input type="text" class="form-control newProductPrice" initPrice="'.$productAnswer["precio_venta"].'" name="newProductPrice" value="'.$value["total"].'" readonly required>
                           
                                 </div>
                       
@@ -250,7 +250,7 @@
 
                                   <span class="input-group-addon"><i class="ion ion-social-usd"></i></span>
                                   
-                                  <input type="text" class="form-control input-lg" id="newTotalSell" name="newTotalSell" placeholder="00000" total="" value="<?php echo $sell["total"]; ?>" readonly required>
+                                  <input type="text" class="form-control input-lg" id="newTotalSell" name="newTotalSell" placeholder="00000" total="<?php echo $sell["neto"]; ?>" value="<?php echo $sell["total"]; ?>" readonly required>
 
                                   <input type="hidden" name="totalSell" value="<?php echo $sell["total"]; ?>" id="totalSell">
 
@@ -310,6 +310,13 @@
               </div>
 
             </form>
+
+            <?php 
+
+              $editSell = new SellsController();
+              $editSell -> ctrlEditSell();
+
+            ?>
 
 
            </div>

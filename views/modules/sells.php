@@ -105,7 +105,7 @@
                     
                     <button class="btn btn-warning btnEditSell" idSell="'.$value["id"].'"><i class="fa fa-pencil"></i></button>
                     
-                    <button class="btn btn-danger"><i class="fa fa-times"></i></button>
+                    <button class="btn btn-danger btnDeleteSell" idSell="'.$value["id"].'"><i class="fa fa-times"></i></button>
 
                   </div>
 
@@ -119,6 +119,13 @@
          </tbody>
 
        </table>
+
+       <?php 
+
+        $deleteSell = new SellsController();
+        $deleteSell -> ctrlDeleteSell();
+
+       ?>
 
       </div>
 

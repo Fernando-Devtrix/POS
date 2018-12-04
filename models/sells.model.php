@@ -67,6 +67,64 @@ class SellsModel{
 
 	}
 
+	/*=============================================
+	=               UPDATE SELLS                  =
+	=============================================*/
+
+	static public function mdlEditSell($table, $data) {
+
+		$stmt = Conection::conect()->prepare("UPDATE $table SET  id_cliente = :id_cliente, id_vendedor = :id_vendedor, productos = :productos, impuesto = :impuesto, neto = :neto, total= :total, metodo_pago = :metodo_pago WHERE codigo = :codigo");
+
+		$stmt->bindParam(":codigo", $data["codigo"], PDO::PARAM_INT);
+		$stmt->bindParam(":id_cliente", $data["id_cliente"], PDO::PARAM_INT);
+		$stmt->bindParam(":id_vendedor", $data["id_vendedor"], PDO::PARAM_INT);
+		$stmt->bindParam(":productos", $data["productos"], PDO::PARAM_STR);
+		$stmt->bindParam(":impuesto", $data["impuesto"], PDO::PARAM_STR);
+		$stmt->bindParam(":neto", $data["neto"], PDO::PARAM_STR);
+		$stmt->bindParam(":total", $data["total"], PDO::PARAM_STR);
+		$stmt->bindParam(":metodo_pago", $data["metodo_pago"], PDO::PARAM_STR);
+
+		if($stmt->execute()){
+
+			return "ok";
+
+		}else{
+
+			return "error";
+		
+		}
+
+		$stmt->close();
+		$stmt = null;
+
+	}
+
+	/*=============================================
+	=               DELETE SELLS                  =
+	=============================================*/
+
+	static public function mdlDeleteSell($table, $data){
+
+		$stmt = Conection::conect()->prepare("DELETE FROM $table WHERE id = :id");
+
+		$stmt -> bindParam(":id", $data, PDO::PARAM_INT);
+
+		if($stmt -> execute()){
+
+			return "ok";
+		
+		}else{
+
+			return "error";	
+
+		}
+
+		$stmt -> close();
+
+		$stmt = null;
+
+	}
+
 }
 	
 
