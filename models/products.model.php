@@ -8,7 +8,7 @@ class ModelProducts {
 	# =              SHOW PRODUCTS                =
 	# =============================================
 		
-	static public function mdlShowProducts($table, $item, $value) {
+	static public function mdlShowProducts($table, $item, $value, $order) {
 
 		if ($item != null) {
 			
@@ -22,7 +22,7 @@ class ModelProducts {
 
 		}else{
 
-			$stmt = Conection::conect()->prepare("SELECT * FROM $table");
+			$stmt = Conection::conect()->prepare("SELECT * FROM $table ORDER BY $order DESC");
 			
 			$stmt -> execute();
 
@@ -152,6 +152,23 @@ class ModelProducts {
 
 		$stmt = null;
 
+	}
+
+	/*===============================
+	      SHOW SELLS TOTAL
+	=================================*/	
+
+	static public function mdlShowSellsSums($table){
+
+		$stmt = Conection::conect()->prepare("SELECT SUM(ventas) as total FROM $table");
+
+		$stmt -> execute();
+
+		return $stmt -> fetch();
+
+		$stmt -> close();
+
+		$stmt = null;
 	}
 
  }

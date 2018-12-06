@@ -2,11 +2,11 @@
 
 class ProductsController {
 
-	static public function ctrlShowProducts($item, $value) {
+	static public function ctrlShowProducts($item, $value, $order) {
 
 		$table = "productos";
 
-		$answer = ModelProducts::mdlShowProducts($table, $item, $value); 
+		$answer = ModelProducts::mdlShowProducts($table, $item, $value, $order); 
 
 		return $answer;
 
@@ -335,6 +335,20 @@ class ProductsController {
 			}		
 
 		}
+
+	}
+
+	/*==============================
+	=		SHOW SUM SELLS         =
+	===============================*/
+
+	static public function ctrlShowSellsSums(){
+
+		$table = "productos";
+
+		$answer = ModelProducts::mdlShowSellsSums($table);
+
+		return $answer;
 
 	}
 

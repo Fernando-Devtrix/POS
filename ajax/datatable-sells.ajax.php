@@ -13,8 +13,9 @@ class ProductsSellsTable {
 
 	    $item = null;
         $value = null;
+        $order = "id";
 
-        $products = ProductsController::ctrlShowProducts($item, $value);
+        $products = ProductsController::ctrlShowProducts($item, $value, $order);
 		        
         $jsonData = '{
 				  "data": [';
@@ -35,7 +36,7 @@ class ProductsSellsTable {
 						
 						$stock = "<button class='btn btn-danger'>".$products[$i]["stock"]."</button>";
 					
-					}else if ($products[$i]["stock"] > 11 && $products[$i]["stock"] <= 15) {
+					}else if ($products[$i]["stock"] >= 11 && $products[$i]["stock"] <= 15) {
 						
 						$stock = "<button class='btn btn-warning'>".$products[$i]["stock"]."</button>";
 

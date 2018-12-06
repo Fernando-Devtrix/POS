@@ -125,6 +125,58 @@ class SellsModel{
 
 	}
 
+	/*=============================================
+	=                 DATES RANGES               =
+	=============================================*/
+
+	static public function mdlSellsDateRange($table, $starterDate, $lastDate) {
+
+		if ($starterDate == null) {
+
+			$stmt = Conection::conect()->prepare("SELECT * FROM $table ORDER BY id ASC");
+
+			$stmt -> execute();
+
+			return $stmt -> fetchAll();
+
+		}else if($starterDate == $lastDate){
+
+			$stmt = Conection::conect()->prepare("SELECT * FROM $table WHERE fecha like '%$lastDate%'");
+
+			$stmt -> bindParam(":fecha", $lastDate, PDO::PARAM_STR);
+
+			$stmt -> execute();
+
+			return $stmt -> fetchAll();
+
+		}else{
+
+			$currentDate = new DateTime();
+			$currentDate ->add(new DateInterval("P1D"));
+			$currentDatePlusOne = $currentDate->format("Y-m-d");
+
+			$lastDate2 = new DateTime($lastDate);
+			$lastDate2 ->add(new DateInterval("P1D"));
+			$lastDatePlusOne = $lastDate2->format("Y-m-d");
+
+			if ($lastDatePlusOne == $currentDatePlusOne) {
+
+			$stmt = Conection::conect()->prepare("SELECT * FROM $table WHERE fecha BETWEEN '$starterDate' AND '$lastDatePlusOne'");
+				
+			}else{
+
+			$stmt = Conection::conect()->prepare("SELECT * FROM $table WHERE fecha BETWEEN '$starterDate' AND '$lastDate'");
+
+			}
+			
+			$stmt -> execute();
+
+			return $stmt -> fetchAll();	
+
+		}
+
+	}
+
 }
 	
 

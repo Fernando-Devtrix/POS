@@ -143,8 +143,9 @@
 
                         $item = "id";
                         $val = $value["id"];
+                        $order = "id";
 
-                        $productAnswer = ProductsController::ctrlShowProducts($item, $val);
+                        $productAnswer = ProductsController::ctrlShowProducts($item, $val, $order);
 
                         $previousStock = $productAnswer["stock"] + $value["cantidad"];
                         

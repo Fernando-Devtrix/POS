@@ -33,6 +33,15 @@
           
         </a>
 
+        <button type="button" class="btn btn-default pull-right" id="daterange-btn">
+           
+            <span>
+              <i class="fa fa-calendar"></i> Rango de fecha
+            </span>
+
+            <i class="fa fa-caret-down"></i>
+
+         </button>
 
       </div>
 
@@ -62,10 +71,19 @@
 
           <?php 
 
-          $item = null;
-          $value = null;
+          if (isset($_GET["starterDate"])) {
 
-          $answer = SellsController::ctrlShowSells($item, $value);
+            $starterDate = $_GET["starterDate"];
+            $lastDate = $_GET["lastDate"];
+
+          }else{
+
+            $starterDate = null;
+            $lastDate = null;
+
+          }
+
+          $answer = SellsController::ctrlSellsDateRange($starterDate, $lastDate);
 
           foreach ($answer as $key => $value) {
             
@@ -101,7 +119,7 @@
                   
                   <div class="btn-group">
                     
-                    <button class="btn btn-info"><i class="fa fa-print"></i></button>
+                    <button class="btn btn-info btnPrintInvoice" sellCode="'.$value["codigo"].'"><i class="fa fa-print"></i></button>
                     
                     <button class="btn btn-warning btnEditSell" idSell="'.$value["id"].'"><i class="fa fa-pencil"></i></button>
                     

@@ -439,5 +439,19 @@ class SellsController {
 		}
 
 	}
+
+	/*==========================
+	=        DATE RANGES       =
+	============================*/
+
+	static public function ctrlSellsDateRange($starterDate, $lastDate) {
+
+		$table = "ventas";
+
+		$answer = SellsModel::mdlSellsDateRange($table, $starterDate, $lastDate);
+
+		return $answer;
+
+	}
 	
 }

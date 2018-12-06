@@ -1,4 +1,18 @@
  /*=============================================
+=         LOCAL STORAGE VARIABLE             =
+=============================================*/
+
+if (localStorage.getItem("getRange") != null) {
+
+	$("#daterange-btn span").html(localStorage.getItem("getRange"));
+
+}else{
+
+	$("#daterange-btn span").html('<i class="fa fa-calendar"></i>Rango de fecha');
+};
+
+
+ /*=============================================
 =        LOAD SELLS DINAMIC TABLE             =
 =============================================*/
 
@@ -669,7 +683,7 @@ function listPaymentMethods() {
 =        EDIT SELLS              =
 =================================*/
 
-$(".btnEditSell").click(function() {
+$(".tables").on("click", ".btnEditSell", function() {
 
 	var idSell = $(this).attr("idSell"); 
 
@@ -717,7 +731,7 @@ $('.sellsTable').on('draw.dt', function() {
 =        DELETE SELLS            =
 =================================*/
 
-$(".btnDeleteSell").click(function(){
+$(".tables").on("click", "btnDeleteSell", function(){
 
 	idSell = $(this).attr("idSell");
 
@@ -739,5 +753,106 @@ $(".btnDeleteSell").click(function(){
       	}
 
       });
+
+});
+
+
+/*================================
+=        PRINT INVOICE           =
+=================================*/
+
+$(".tables").on("click", ".btnPrintInvoice", function() {
+
+	sellCode = $(this).attr("sellCode");
+
+	window.open("extensiones/TCPDF/examples/factura.php?codigo="+sellCode, "_blank");
+
+});
+
+
+/*================================
+=        RANGE DATE PICKER       =
+=================================*/
+$('#daterange-btn').daterangepicker(
+  {
+    ranges   : {
+      'Hoy'       : [moment(), moment()],
+      'Ayer'   : [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+      'Últimos 7 días' : [moment().subtract(6, 'days'), moment()],
+      'Últimos 30 días': [moment().subtract(29, 'days'), moment()],
+      'Este mes'  : [moment().startOf('month'), moment().endOf('month')],
+      'Último mes'  : [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+    },
+    startDate: moment(),
+    endDate  : moment()
+  },
+  function (start, end) {
+    $('#daterange-btn span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'))
+
+    var starterDate = start.format("YYYY-MM-DD");
+
+    var lastDate = end.format("YYYY-MM-DD");
+
+    var getRange = $("#daterange-btn span").html();
+
+    localStorage.setItem("getRange", getRange);
+
+    window.location = "index.php?route=sells&starterDate="+starterDate+"&lastDate="+lastDate;
+
+  }
+)
+
+$(".daterangepicker.opensleft .range_inputs .cancelBtn").on("click", function(){
+
+	localStorage.removeItem("getRange");
+	localStorage.clear();
+	window.location = "sells";
+
+});
+
+/*================================
+=        RANGE DATE PICKER       =
+=================================*/
+
+$(".daterangepicker.opensleft .ranges li").on("click", function(){
+
+	var textToday = $(this).attr("data-range-key");
+
+	if(textToday == "Hoy"){
+
+		var d = new Date();
+		
+		var day = d.getDate();
+		var month = d.getMonth()+1;
+		var year = d.getFullYear();
+
+		if (month < 10) {
+
+			var startDate = year+"-0"+month+"-"+day;
+			var lastDate = year+"-0"+month+"-"+day;
+
+		}else if(day < 10) {
+
+			var startDate = year+"-"+month+"-0"+day;
+			var lastDate = year+"-"+month+"-0"+day;
+
+		}else if(month < 10 && day < 10) {
+
+			var startDate = year+"-0"+month+"-0"+day;
+			var lastDate = year+"-0"+month+"-0"+day;
+		
+		}else{
+
+			var startDate = year+"-"+month+"-"+day;
+			var lastDate = year+"-"+month+"-"+day;
+
+		}
+
+		localStorage.setItem("getRange", "Hoy");
+
+    	window.location = "index.php?route=sells&starterDate="+startDate+"&lastDate="+lastDate;
+
+
+	}
 
 });

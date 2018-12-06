@@ -14,8 +14,9 @@ class AjaxProducts{
 
     $item = "id_categoria";
     $value = $this->categoryID;
+    $order = "id";
 
-    $answer = ProductsController::ctrlShowProducts($item, $value);
+    $answer = ProductsController::ctrlShowProducts($item, $value, $order);
 
     echo json_encode($answer);
 
@@ -31,8 +32,9 @@ class AjaxProducts{
 
        $item = null;
        $value = null;
+       $order = "id";
 
-       $answer = ProductsController::ctrlShowProducts($item, $value);
+       $answer = ProductsController::ctrlShowProducts($item, $value, $order);
 
        echo json_encode($answer);
         
@@ -40,8 +42,9 @@ class AjaxProducts{
       
        $item = "descripcion";
        $value = $this->productName;
+       $order = "id";
 
-       $answer = ProductsController::ctrlShowProducts($item, $value);
+       $answer = ProductsController::ctrlShowProducts($item, $value, $oder);
 
        echo json_encode($answer);
 
@@ -49,8 +52,9 @@ class AjaxProducts{
 
        $item = "id";
        $value = $this->idProduct;
+       $order = "id";
 
-       $answer = ProductsController::ctrlShowProducts($item, $value);
+       $answer = ProductsController::ctrlShowProducts($item, $value, $order);
 
        echo json_encode($answer);
 
