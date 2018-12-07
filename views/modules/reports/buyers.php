@@ -1,3 +1,43 @@
+<?php
+
+$item = null;
+$valor = null;
+
+$sells = SellsController::ctrlShowSells($item, $valor);
+$clients = ClientsController::ctrlShowClients($item, $valor);
+
+$clientsArray = array();
+$clientsListArray = array();
+
+foreach ($sells as $key => $valueSells) {
+  
+  foreach ($clients as $key => $valueClients) {
+    
+      if($valueClients["id"] == $valueSells["id_cliente"]){
+
+        //Get clients into an array
+        array_push($clientsArray, $valueClients["nombre"]);
+
+        //Get clients and net values in the same array
+        $clientsListArray = array($valueClients["nombre"] => $valueSells["neto"]);
+
+        //Sum nets of each client
+        foreach ($clientsListArray as $key => $value) {
+          
+          $clientsTotalSum[$key] += $value;
+        
+        }
+
+      }   
+  }
+
+}
+
+//Avoid repeating names
+$noRepeatNames = array_unique($clientsArray);
+
+?>
+
 	<!--===========================
 	=    Create Product         =
 	===========================-->
@@ -28,9 +68,15 @@ var bar = new Morris.Bar({
   element: 'bar-chart2',
   resize: true,
   data: [
-    {y: 'Miguel', a: 100},
-    {y: 'Juan', a: 75},
-    {y: 'Jorge', a: 50}
+    <?php
+    
+    foreach($noRepeatNames as $value){
+
+      echo "{y: '".$value."', a: '".$clientsTotalSum[$value]."'},";
+
+    }
+
+  ?>
   ],
   barColors: ['#00a65a'],
   xkey: 'y',
