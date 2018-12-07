@@ -39,8 +39,9 @@ class SellsController {
 
 				$item = "id";
 				$val = $value["id"];
+				$order = "id";
 
-				$getProduct = ModelProducts::mdlShowProducts($productsTable, $item, $val);
+				$getProduct = ModelProducts::mdlShowProducts($productsTable, $item, $val, $order);
 
 				$item1a = "ventas";
 				$val1a = $value["cantidad"] + $getProduct["ventas"];

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <?php 
 
 $item = null;
@@ -5,11 +6,21 @@ $value = null;
 
 $sells = SellsController::ctrlShowSells($item, $value);
 $users = UserController::ctrlShowUser($item, $value);
+=======
+<?php
+
+$item = null;
+$valor = null;
+
+$sells = SellsController::ctrlShowSells($item, $valor);
+$users = UserController::ctrlShowUser($item, $valor);
+>>>>>>> 6e678b393eb016e8ec95dc291116f3313b5fed2a
 
 $sellersArray = array();
 $sellersListArray = array();
 
 foreach ($sells as $key => $valueSells) {
+<<<<<<< HEAD
 	
 	foreach ($users as $key => $valueUsers) {
 	
@@ -37,6 +48,33 @@ foreach ($sells as $key => $valueSells) {
 
 //Avoid repeting names
 
+=======
+
+  foreach ($users as $key => $valueUsers) {
+
+    if($valueUsers["id"] == $valueSells["id_vendedor"]){
+
+        //Get sellers into an array
+        array_push($sellersArray, $valueUsers["nombre"]);
+
+        //Get sellers and net values in the same array
+        $sellersListArray = array($valueUsers["nombre"] => $valueSells["neto"]);
+
+         //Sum nets of each seller
+        foreach ($sellersListArray as $key => $value) {
+
+            $sellersTotalSum[$key] += $value;
+
+         }
+
+    }
+  
+  }
+
+}
+
+//Avoid repeating names
+>>>>>>> 6e678b393eb016e8ec95dc291116f3313b5fed2a
 $noRepeatNames = array_unique($sellersArray);
 
 ?>
@@ -72,6 +110,7 @@ var bar = new Morris.Bar({
   resize: true,
   data: [
 
+<<<<<<< HEAD
   <?php 
 
   	foreach ($noRepeatNames as $value) {
@@ -82,6 +121,18 @@ var bar = new Morris.Bar({
 
   ?>
     
+=======
+    <?php
+    
+    foreach($noRepeatNames as $value){
+
+      echo "{y: '".$value."', a: '".$sellersTotalSum[$value]."'},";
+
+    }
+
+  ?>
+  
+>>>>>>> 6e678b393eb016e8ec95dc291116f3313b5fed2a
   ],
   barColors: ['#0af'],
   xkey: 'y',
