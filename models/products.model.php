@@ -70,7 +70,7 @@ class ModelProducts {
 	}
 
 	# =============================================
-	# =              ADD PRODUCTS                =
+	# =             EDIT PRODUCTS                =
 	# =============================================
 
 	static function mdlEditProduct($table, $data) {
