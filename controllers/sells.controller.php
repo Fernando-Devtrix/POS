@@ -172,8 +172,9 @@ class SellsController {
 
 					$item = "id";
 				 	$val = $value["id"];
+				 	$order = "id";
 
-				 	$getProduct = ModelProducts::mdlShowProducts($productsTable, $item, $val);
+				 	$getProduct = ModelProducts::mdlShowProducts($productsTable, $item, $val, $order);
 
 				 	$item1a = "ventas";
 				 	$val1a = $getProduct["ventas"] - $value["cantidad"];
@@ -215,8 +216,9 @@ class SellsController {
 
 					$item_2 = "id";
 					$val_2 = $value["id"];
+					$order = "id";
 
-					$getProduct_2 = ModelProducts::mdlShowProducts($productsTable_2, $item_2, $val_2);
+					$getProduct_2 = ModelProducts::mdlShowProducts($productsTable_2, $item_2, $val_2, $order);
 
 					$item1a_2 = "ventas";
 					$val1a_2 = $value["cantidad"] + $getProduct_2["ventas"];
@@ -382,8 +384,9 @@ class SellsController {
 
 					$item = "id";
 				 	$val = $value["id"];
+				 	$order = "id";
 
-				 	$getProduct = ModelProducts::mdlShowProducts($productsTable, $item, $val);
+				 	$getProduct = ModelProducts::mdlShowProducts($productsTable, $item, $val, $order);
 
 				 	$item1a = "ventas";
 				 	$val1a = $getProduct["ventas"] - $value["cantidad"];
@@ -452,6 +455,104 @@ class SellsController {
 		$answer = SellsModel::mdlSellsDateRange($table, $starterDate, $lastDate);
 
 		return $answer;
+
+	}
+
+	/*==========================
+	=        DOWNLOAD EXCEL     =
+	============================*/
+
+	static public function ctrlDownloadReport(){
+
+		if (isset($_GET["report"])) {
+
+			$table = "ventas";
+
+			if (isset($_GET["starterDate"]) && isset($_GET["lastDate"])) {
+			 	
+				$sells = SellsModel::mdlSellsDateRange($table, $_GET["starterDate"], $_GET["lastDate"]);
+
+			 }else{
+
+			 	$item = null;
+			 	$value = null;
+
+				$sells = SellsModel::mdlShowSells($table, $item, $value);
+
+			}
+
+			/*============================
+			=      CREATE EXCEL FILE     =
+			============================*/
+
+			$Name = $_GET["report"].'.xls';
+
+			header('Expires: 0');
+			header('Cache-control: private');
+			header("Content-type: application/vnd.ms-excel"); // Excel File
+			header("Cache-Control: cache, must-revalidate"); 
+			header('Content-Description: File Transfer');
+			header('Last-Modified: '.date('D, d M Y H:i:s'));
+			header("Pragma: public"); 
+			header('Content-Disposition:; filename="'.$Name.'"');
+			header("Content-Transfer-Encoding: binary");
+
+			echo utf8_decode("<table border='0'> 
+
+					<tr> 
+					<td style='font-weight:bold; border:1px solid #eee;'>CÓDIGO</td> 
+					<td style='font-weight:bold; border:1px solid #eee;'>CLIENTE</td>
+					<td style='font-weight:bold; border:1px solid #eee;'>VENDEDOR</td>
+					<td style='font-weight:bold; border:1px solid #eee;'>CANTIDAD</td>
+					<td style='font-weight:bold; border:1px solid #eee;'>PRODUCTOS</td>
+					<td style='font-weight:bold; border:1px solid #eee;'>IMPUESTO</td>
+					<td style='font-weight:bold; border:1px solid #eee;'>NETO</td>		
+					<td style='font-weight:bold; border:1px solid #eee;'>TOTAL</td>		
+					<td style='font-weight:bold; border:1px solid #eee;'>METODO DE PAGO</td	
+					<td style='font-weight:bold; border:1px solid #eee;'>FECHA</td>		
+					</tr>");
+
+			foreach ($sells as $row => $item) {
+				
+				$client = ClientsController::ctrlShowClients("id", $item["id_cliente"]);
+				$seller = UserController::ctrlShowUser("id", $item["id_vendedor"]);
+
+			echo utf8_decode("<tr>
+
+						<td style='border:1px solid #eee;'>".$item["codigo"]."</td> 
+			 			<td style='border:1px solid #eee;'>".$client["nombre"]."</td>
+			 			<td style='border:1px solid #eee;'>".$seller["nombre"]."</td>
+ 						<td style='border:1px solid #eee;'>");
+
+				$products =  json_decode($item["productos"], true);
+
+			 	foreach ($products as $key => $valueProducts) {
+			 			
+			 			echo utf8_decode($valueProducts["cantidad"]."<br>");
+			 		}
+
+			 	echo utf8_decode("</td><td style='border:1px solid #eee;'>");	
+
+		 		foreach ($products as $key => $valueProducts) {
+			 			
+		 			echo utf8_decode($valueProducts["descripcion"]."<br>");
+		 		
+		 		}
+
+		 		echo utf8_decode("</td>
+					<td style='border:1px solid #eee;'>$ ".number_format($item["impuesto"],2)."</td>
+					<td style='border:1px solid #eee;'>$ ".number_format($item["neto"],2)."</td>	
+					<td style='border:1px solid #eee;'>$ ".number_format($item["total"],2)."</td>
+					<td style='border:1px solid #eee;'>".$item["metodo_pago"]."</td>
+					<td style='border:1px solid #eee;'>".substr($item["fecha"],0,10)."</td>		
+		 			</tr>");
+				
+			}
+
+			echo "</table>";
+
+
+		}
 
 	}
 	

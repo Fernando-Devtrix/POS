@@ -65,13 +65,12 @@ $totalSells = ProductsController::ctrlShowSellsSums();
         for ($i= 0; $i < 5; $i++) { 
           
           echo '<li>     
-                   <a href="#">
+                   <a>
 
-                    '.$products[$i]["descripcion"].'
+                    <img src="'.$products[$i]["imagen"].'" class="img-thumbnail" width="60px" style="margin-right:10px">'.$products[$i]["descripcion"].'
 
-                     <span class="pull-right text-'.$colors[$i].'"><i class="fa fa-angle-down">
-
-                      </i> '.ceil($products[$i]["ventas"]*100/$totalSells["total"]).'
+                     <span class="pull-right text-'.$colors[$i].'">
+                     '.ceil($products[$i]["ventas"]*100/$totalSells["total"]).'%
 
                      </span>
 

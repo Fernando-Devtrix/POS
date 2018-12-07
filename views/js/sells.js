@@ -731,7 +731,7 @@ $('.sellsTable').on('draw.dt', function() {
 =        DELETE SELLS            =
 =================================*/
 
-$(".tables").on("click", "btnDeleteSell", function(){
+$(".tables").on("click", ".btnDeleteSell", function(){
 
 	idSell = $(this).attr("idSell");
 

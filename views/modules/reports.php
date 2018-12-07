@@ -26,19 +26,40 @@
 
           <div class="input-group">
             
-            <button type="button" class="btn btn-default" id="daterange-btn2">
-               
-                <span>
-                  <i class="fa fa-calendar"></i> Rango de fecha
-                </span>
+            <div class="input-group">
+              
+              <button type="button" class="btn btn-default" id="daterange-btn2">
+                 
+                  <span>
+                    <i class="fa fa-calendar"></i> Rango de fecha
+                  </span>
 
-                <i class="fa fa-caret-down"></i>
+                  <i class="fa fa-caret-down"></i>
 
-             </button>
+               </button>
+              
+            </div>
             
           </div>
 
           <div class="box-tools pull-right">
+
+            <?php 
+
+              if (isset($_GET["starterDate"])) {
+              
+                echo '<a href="views/modules/download-report.php?report=report&starterDate='.$_GET["starterDate"].'&lastDate='.$_GET["lastDate"].'">';
+                
+              }else{
+
+                echo '<a href="views/modules/download-report.php?report=report">';
+              }
+
+            ?>
+              
+              <button class="btn btn-success" style="margin-top: 5px">Descargar reporte en Excel</button>
+              
+            </a>
 
           </div>
   

@@ -28,7 +28,8 @@ foreach ($sells as $key => $valueSells) {
         
         }
 
-      }   
+    }   
+
   }
 
 }
