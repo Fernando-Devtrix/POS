@@ -70,7 +70,8 @@ $noRepeatNames = array_unique($clientsArray);
         
         }
 
-      }   
+    }   
+
   }
 
 }
