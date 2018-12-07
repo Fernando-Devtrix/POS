@@ -2,12 +2,16 @@
 
 class ProductsController {
 
+	/*===========================
+	=    	Show Product        =
+	===========================*/
+
 	static public function ctrlShowProducts($item, $value, $order) {
 
 		$table = "productos";
 
 		$answer = ModelProducts::mdlShowProducts($table, $item, $value, $order); 
-
+		
 		return $answer;
 
 	}
