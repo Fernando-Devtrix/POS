@@ -177,6 +177,24 @@ class SellsModel{
 
 	}
 
+	/*===========================================
+	=             SUM ALL SELLS                 =
+	============================================*/
+
+	static public function mdlSumTotalSells($table){	
+
+		$stmt = Conection::conect()->prepare("SELECT SUM(neto) as total FROM $table");
+
+		$stmt -> execute();
+
+		return $stmt -> fetch();
+
+		$stmt -> close();
+
+		$stmt = null;
+
+	}
+
 }
 	
 

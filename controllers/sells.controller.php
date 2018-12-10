@@ -555,5 +555,19 @@ class SellsController {
 		}
 
 	}
-	
+
+	/*==========================
+	=      SELLS TOTAL SUM     =
+	============================*/
+
+	static public function ctrlSumTotalSells() {
+
+		$table = "ventas";
+
+		$answer = SellsModel::mdlSumTotalSells($table);
+
+		return $answer;
+		
+	}
+
 }
