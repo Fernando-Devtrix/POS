@@ -1,4 +1,18 @@
+<?php   
 
+  if ($_SESSION["perfil"] == "Especial" || $_SESSION["perfil"] == "Vendedor") {
+
+    echo '
+    
+      <script>
+      
+        window.location = "main";
+        
+      </script>';
+
+  }
+
+?>
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->

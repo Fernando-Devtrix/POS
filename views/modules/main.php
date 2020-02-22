@@ -26,7 +26,12 @@
         
         <?php 
 
-          include "main/upper-boxes.php"
+          if($_SESSION["perfil"] == "Administrador") {
+
+            include "main/upper-boxes.php";
+
+          }
+
 
         ?>
 
@@ -39,7 +44,12 @@
 
           <?php 
 
-            include "reports/sells-charter.php";
+            if($_SESSION["perfil"] == "Administrador") {
+
+              include "reports/sells-charter.php";
+  
+            }
+
 
           ?>
           
@@ -49,7 +59,12 @@
 
           <?php 
 
-            include "reports/most-sold-products.php";
+            if($_SESSION["perfil"] == "Administrador") {
+
+              include "reports/most-sold-products.php";
+
+            }
+
 
           ?>
           
@@ -59,7 +74,37 @@
 
           <?php 
 
-            include "main/recently-products.php";
+            if($_SESSION["perfil"] == "Administrador") {
+
+             include "main/recently-products.php";
+
+            }
+
+          ?>
+          
+        </div>
+
+        <div class="col-lg-12">
+
+          <?php 
+
+            if($_SESSION["perfil"] == "Especial" || $_SESSION["perfil"] == "Vendedor") {
+
+                echo '
+
+                  <div class="box box-success">
+                    
+                    <div class="box-header">
+
+                      <h1>Bienvenid@ '.$_SESSION["nombre"].'</h1>
+                      <h6>Rold: '.$_SESSION["perfil"].'</h6>
+
+                    </div>
+
+                  </div>
+                ';
+
+            }
 
           ?>
           

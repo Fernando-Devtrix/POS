@@ -1,3 +1,20 @@
+<?php   
+
+  if ($_SESSION["perfil"] == "Especial") {
+
+    echo '
+      <script>
+      
+        window.location = "main";
+        
+      </script>
+  
+    ';
+
+  }
+
+?>
+
 <div class="content-wrapper">
 
   <section class="content-header">
@@ -119,13 +136,17 @@
                   
                   <div class="btn-group">
                     
-                    <button class="btn btn-info btnPrintInvoice" sellCode="'.$value["codigo"].'"><i class="fa fa-print"></i></button>
-                    
-                    <button class="btn btn-warning btnEditSell" idSell="'.$value["id"].'"><i class="fa fa-pencil"></i></button>
-                    
-                    <button class="btn btn-danger btnDeleteSell" idSell="'.$value["id"].'"><i class="fa fa-times"></i></button>
+                    <button class="btn btn-info btnPrintInvoice" sellCode="'.$value["codigo"].'"><i class="fa fa-print"></i></button>';
+              
+                     if($_SESSION["perfil"] == "Administrador") {
 
-                  </div>
+              echo '<button class="btn btn-warning btnEditSell" idSell="'.$value["id"].'"><i class="fa fa-pencil"></i></button>
+                    
+                    <button class="btn btn-danger btnDeleteSell" idSell="'.$value["id"].'"><i class="fa fa-times"></i></button>';
+
+                     }      
+
+            echo '</div>
 
                 </td>
 

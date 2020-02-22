@@ -1,4 +1,19 @@
+<?php   
 
+  if ($_SESSION["perfil"] == "Vendedor") {
+
+    echo '
+      <script>
+      
+        window.location = "main";
+
+      </script>
+  
+    ';
+
+  }
+
+?>
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
@@ -71,11 +86,15 @@
                           
                           <div class="btn-group">
                             
-                            <button class="btn btn-warning btnEditCategory" idCategory="'.$value["id"].'" data-toggle="modal" data-target="#modalEditCategory"><i class="fa fa-pencil"></i></button>
-                            
-                            <button class="btn btn-danger btnDeleteCategory" idCategory="'.$value["id"].'"><i class="fa fa-times"></i></button>
+                            <button class="btn btn-warning btnEditCategory" idCategory="'.$value["id"].'" data-toggle="modal" data-target="#modalEditCategory"><i class="fa fa-pencil"></i></button>';
 
-                          </div>
+                            if($_SESSION["perfil"] == "Administrador") {
+
+                              echo '<button class="btn btn-danger btnDeleteCategory" idCategory="'.$value["id"].'"><i class="fa fa-times"></i></button>';
+                         
+                            }
+                            
+                     echo '</div>
 
                         </td>
 

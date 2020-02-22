@@ -13,8 +13,11 @@
 
 // });
 
+var hiddenProfile = $("#hiddenProfile").val();
+// console.log("hiddenProfile", hiddenProfile);
+
 $('.productsTable').DataTable( {
-    "ajax": "ajax/datatable-products.ajax.php",
+    "ajax": "ajax/datatable-products.ajax.php?hiddenProfile="+hiddenProfile,
     "deferRender": true,
 	"retrieve": true,
 	"processing": true,
@@ -51,42 +54,42 @@ $('.productsTable').DataTable( {
 =           Get category to set code          =
 =============================================*/
 
-$("#newCategory").change(function() {
+// $("#newCategory").change(function() {
 
-	var categoryID = $(this).val();
+// 	var categoryID = $(this).val();
 
-	var data = new FormData();
-	data.append("categoryID", categoryID);
+// 	var data = new FormData();
+// 	data.append("categoryID", categoryID);
 
-	$.ajax({
+// 	$.ajax({
 
-		url: "ajax/products.ajax.php",
-		method: "POST",
-	    data: data,
-	  	cache: false,
-	    contentType: false,
-	  	processData: false,
-	   	dataType:"json",
-	   	success: function(answer) {
+// 		url: "ajax/products.ajax.php",
+// 		method: "POST",
+// 	    data: data,
+// 	  	cache: false,
+// 	    contentType: false,
+// 	  	processData: false,
+// 	   	dataType:"json",
+// 	   	success: function(answer) {
 
-	   		if (!answer) {
+// 	   		if (!answer) {
 
-	   			var newCode = categoryID + "01";
-	   			$("#newCode").val(newCode);
+// 	   			var newCode = categoryID + "01";
+// 	   			$("#newCode").val(newCode);
 	   		
-	   		}else{
+// 	   		}else{
 
-		   		var newCode = Number(answer["codigo"]) + 1;
-		   		$("#newCode").val(newCode);	
+// 		   		var newCode = Number(answer["codigo"]) + 1;
+// 		   		$("#newCode").val(newCode);	
 			
-	   		}
+// 	   		}
 	   		
 	    
-	     }
+// 	     }
 
-	});
+// 	});
 
-});
+// });
 
 /*=============================================
 =               ADD SELL PRICE                =

@@ -1,5 +1,10 @@
 <?php
 
+use Mike42\Escpos\Printer;
+use Mike42\Escpos\EscposImage;
+use Mike42\Escpos\PrintConnectors\FilePrintConnector;
+use Mike42\Escpos\PrintConnectors\WindowsPrintConnector;
+
 class SellsController {
 
 	/*=============================================
@@ -97,6 +102,84 @@ class SellsController {
 			$answer = SellsModel::mdlAddSell($table, $data);
 
 			if($answer == "ok"){
+
+				// $printer = "pos-58-series";
+
+				// $connector = new WindowsPrintConnector($printer);
+
+				// $print = new Printer($connector);
+
+				// $print -> text("Hola mundo"."\n");
+
+				// $print -> cut();
+
+				// $print -> close();
+
+				$printerModel = "pos-58-series";
+
+				$connector = new WindowsPrintConnector($printerModel);
+
+				$printer = new Printer($connector);
+
+				$printer -> setJustification(Printer::JUSTIFY_CENTER); //Fecha de venta/factura
+
+				$printer -> feed(1); //Alimentar el papel 1 vez*/
+
+				$printer -> text("POSChief"."\n"); //Nombre de la empresa
+
+				$printer -> text("Dirección: Rinconadas del Venado"."\n"); //Dirección de la empresa / negocio
+
+				$printer -> text("Teléfono: 771 52 62 181"."\n"); //Teléfono de la empresa
+
+				$printer -> text("FACTURA N.".$_POST["newPurchase"]."\n"); //Número de factura
+
+				$printer -> feed(1); //Alimentar el papel 1 vez*/
+
+				$printer -> text("Cliente: ".$getClients["nombre"]."\n"); //Nombre del cliente
+
+				$sellerTable = "usuarios";
+				$item = "id";
+				$value = $_POST["idSeller"];
+
+				$getSeller = UserModel::mdlShowUsers($sellerTable, $item, $value);
+
+				$printer -> text("Vendedor: ".$getSeller["nombre"]."\n"); //Nombre del vendedor
+
+				$printer -> feed(1); //Alimentar el papel 1 vez*/
+
+				foreach ($listProducts as $key => $value) {
+
+					$printer -> setJustification(Printer::JUSTIFY_LEFT);
+
+					$printer -> text($value["descripcion"]."\n"); //Nombre del producto
+
+					$printer -> setJustification(Printer::JUSTIFY_RIGHT);
+
+					$printer -> text("$ ".number_format($value["precio"],2)." Ud(s) x ".$value["cantidad"]." = $ ".number_format($value["total"],2)."\n");
+
+				}
+
+				$printer -> feed(1); 
+				
+				$printer -> text("NETO: $ ".number_format($_POST["newTaxNet"],2)."\n"); // Precio neto
+
+				$printer -> text("IMPUESTO: $ ".number_format($_POST["newTaxPrice"],2)."\n"); // Precio del impuesto
+
+				$printer -> text("--------\n");
+
+				$printer -> text("TOTAL: $ ".number_format($_POST["totalSell"],2)."\n"); // Total de la compra
+
+				$printer -> feed(1); 	
+
+				$printer->text("Gracias por su compra"); // Pie de página
+
+				$printer -> feed(3); 
+
+				$printer -> cut(); //Cortamos el papel, si la impresora tiene la opción
+
+				$printer -> pulse(); //Mandar pulso para abrir cajon de dinero
+
+				$printer -> close();
 
 				echo'<script>
 

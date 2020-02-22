@@ -1,3 +1,19 @@
+<?php   
+
+  if ($_SESSION["perfil"] == "Especial") {
+
+    echo '
+      <script>
+      
+        window.location = "main";
+        
+      </script>
+  
+    ';
+
+  }
+
+?>
 
   <div class="content-wrapper">
 
